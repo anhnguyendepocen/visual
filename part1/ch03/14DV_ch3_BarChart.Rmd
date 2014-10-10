@@ -1,0 +1,360 @@
+---
+title: "R Graphics Cookbook - ch3.막대그래프"
+author: "Jung Eun Park"
+date: "Thursday, October 02, 2014"
+output: html_document
+---
+
+--------------------------------------------------------
+
+**3.1 막대 그래프 그리기**
+
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+library(ggplot2)
+library(gcookbook)
+
+pg_mean
+ggplot(pg_mean, aes(x=group, y=weight)) + 
+  geom_bar(stat="identity")
+```
+
+- 연속형(continuous) 변수 vs. 이산형(discrete) 변수
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+BOD
+```
+BOD 데이터에서 Time == 6인 항목이 없으므로, x축을 연속형 데이터로 표현하면 x축에 빈 곳이 생기는데,
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(BOD, aes(x=Time, y=demand)) + 
+  geom_bar(stat="identity")
+```
+
+factor() 함수를 사용하면 이산형 변수로 변환할 수 있음.
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(BOD, aes(x=factor(Time), y=demand)) + 
+  geom_bar(stat="identity")
+```
+
+**막대의 테두리 및 색상 변경**
+
+- 막대의 색은 진회색, 테두리는 없음으로 기본으로 설정되어 있음.
+- 막대색 설정: **fill**
+- 막대 테두리 설정 : **colour** 혹은 **color**
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(BOD, aes(x=factor(Time), y=demand))+ 
+  geom_bar(stat="identity", 
+           fill="lightblue", 
+           colour="black")
+```
+
+**3.2 막대를 함께 묶기**
+
+두 번째 변수를 기준으로 막대들을 묶어서 표현.
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+cabbage_exp
+```
+
+- cabbage_exp 안에 Cultivar와 Date라는 범주형 변수와 Weight라는 연속형 변수가 담겨 있음
+- Date를 x로 두고 Cultivar로 fill 색상을 결정하면, 하나의 Date에 Cultivar별로 색상이 다른 두개의 막대가 묶여서 그려짐.
+- 막대의 fill 색상으로 지정된 변수는 범주형 변수여야 함.
+- 두개의 막대가 x축 방향으로 분리되어 있도록 **position="dodge"**로 설정
+- dodge 설정이 없으면 누적(stacked) 막대그래프 생성
+- stat="identity" 는 R Graphics Cookbook에 나와있지 않지만 설정을 안해주면 에러 뜸
+
+
+```{r fig.width=5, fig.height=3, message=FALSE}
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(position="dodge", colour="black", stat="identity") + 
+  scale_fill_brewer(palette="Pastel1")
+# 팔레트 사용 등 color 사용 관련 부분은 ch.12
+```
+
+```
+* 주의점 : 값이 없는 경우 그래프 수정
+```
+- 범주형 변수들의 조합 중 값이 없는 것이 있다면, 해당 막대가 없어짐과 동시에 주변 막대들이 빈 위치를 채우도록 확장됨
+- 위의 cabbage_exp 데이터에서 마지막 행을 제외하고 복사해서 불러오면,
+
+```{r fig.width=5, fig.height=3, message=FALSE}
+ce <- cabbage_exp[1:5, ] #마지막 6행 제외하고 복사
+ce
+ggplot(ce, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(position="dodge", colour="black", stat="identity") + 
+  scale_fill_brewer(palette="Pastel1")
+```
+
+- 이를 방지하기 위해서는 해당 항목의 y값에 수동으로 NA를 입력
+
+
+**3.3 빈도수 막대그래프 그리기**
+
+- 하나의 행이 하나의 사건을 나타내는 형식으로 구성된 데이터가 있고, 사건들의 빈도를 그래프로 그리고 싶을때, y에 아무것도 주지 않고 geom_bar() 사용
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+#diamonds
+
+ggplot(diamonds, aes(x=cut))+geom_bar(stat="bin")
+# geom_bar()함수의 기본 설정은 stat="bin" 이므로 생략 가능
+```
+- x축에 연속 변수가 오는 경우
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(diamonds, aes(x=carat))+geom_bar()
+# 이 경우, geom_bar 대신 geom_histogram을 사용해도 됨.
+```
+**3.4 막대그래프에 색상 입히기**
+
+- uspopchange 데이터 : 2000~2010년 미국 주별 인구의 % 변동
+- 가장 빨리 성장하는 상위 10개 주와 해당 % 변화 그래프
+- 지역별(Northeast, Wouth, North Central, West)로 막대의 색상 다르게 지정
+- 상위 10개 주를 추출하여 upc라는 이름의 부분집합을 만듬
+```{r fig.width=4, fig.height=3, message=FALSE}
+uspopchange
+upc<-subset(uspopchange, rank(Change)>40)
+upc
+# subset() : 데이터의 부분집합 취하기 -> 15장 7절 참조
+# rank() : 오름차순(작은-> 큰)으로 순위 지정
+```
+
+- 테두리(colour) 및 막대색상(scale_fill_manual()) 변경
+- reorder() : 알파벳순이 아닌 막대높이(Change) 순으로 x축 데이터 재정렬
+- xlab() : x축 라벨의 텍스트 변경 -> 8장 10절
+- 변수의 대입(mapping)은 aes() 안에서, 설정(setting)은 aes 외부에 있음
+
+```{r fig.width=5, fig.height=3, message=FALSE}
+ggplot(upc, aes(x=reorder(Abb, Change), y=Change, fill=Region))+
+  geom_bar(stat="identity", colour="black")+
+  scale_fill_manual(values=c("#669933","#FFCC66"))+
+  xlab("State")
+```
+
+**3.5 음수와 양수 막대 다르게 색상 입히기**
+
+- climate 데이터의 일부를 가져와(csub : 1900년 이후 Berkely 데이터), 값이 양수인지 음수인지를 나타내는 새로운 열 pos를 생성
+```{r fig.width=10, fig.height=3, message=FALSE}
+csub <- subset(climate, Source=="Berkeley" & Year >= 1900)
+csub$pos <- csub$Anomaly10y >= 0
+csub
+ggplot(csub, aes(x=Year, y=Anomaly10y, fill=pos))+geom_bar(stat="identity", position="identity")
+# position="identity"가 없으면 값이 음수인 경우의 막대가 제대로 정의되지 않았다는 경고 메세지 뜸
+# position="identity" / "dodge" / "stacked" ?
+```
+
+- 색깔을 반대로(파란색이 음수, 빨간색이 양수)
+- 범례 삭제
+- 테두리(colour) 및 막대 두께(size) 조정
+
+```{r fig.width=10, fig.height=3, message=FALSE}
+
+ggplot(csub, aes(x=Year, y=Anomaly10y, fill=pos))+
+  geom_bar(stat="identity", position="identity", colour="black", size=0.25 )+
+  scale_fill_manual(values=c("#CCEEFF","#FFDDDD"), guide=FALSE)
+```
+
+**3.6 막대의 너비 및 간격 조절하기**
+
+- 막대너비(width) 설정 : 기본값 0.9(최대 1)
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(pg_mean, aes(x=group, y=weight))+
+  geom_bar(stat="identity", width = 0.5)
+ggplot(pg_mean, aes(x=group, y=weight))+
+  geom_bar(stat="identity")
+ggplot(pg_mean, aes(x=group, y=weight))+
+  geom_bar(stat="identity", width = 1)
+```
+
+- 막대들이 묶여있는 형태일 때, 간격 없이 붙어있도록 기본설정됨
+- 같은 집단에 속한 막대들 사이에 간격 주기 : width를 줄이고 position_dodge의 값을 width보다 크게 설정
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(stat="identity", width=0.5, position=position_dodge(0.7))
+```
+
+**3.7 누적 막대그래프 그리기**
+- position="dodge"를 사용하지 않으면 누적막대그래프가 됨
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(stat="identity")
+```
+
+- 기본 설정으로 출력하면 범례 순서와 막대가 쌓이는 순서가 반대가 되므로, guides()를 사용하여 바꾸어야 할 범례 옵션(fill을 반대로)을 지정
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(stat="identity")+
+  guides(fill=guide_legend(reverse=TRUE))
+```
+
+- 혹은 막대를 쌓는 순서를 뒤집음(order=desc())
+- desc()를 사용하려면 plyr 패키지를 설치, 라이브러리 호출
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+library(plyr)
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar, order=desc(Cultivar)))+
+  geom_bar(stat="identity")
+```
+
+- 막대 색과 테두리 수정
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(stat="identity", colour="black")+
+  guides(fill=guide_legend(reverse=TRUE))+
+  scale_fill_brewer(palette="Pastel1")
+```
+
+**3.8 비율 누적 막대 그래프 그리기**
+
+- 누적 막대 그래프가 비율을 나타내도록 그리기(100% 기준)
+- 누적 막내 내의 데이터가 100%가 되도록 크기 조절  
+- "Date"로 나눈 집단별로 transform() 적용 
+- plyr 패키지의 ddply() 함수 사용 : 입력된 데이터프레임인 cabbage_exp를 지정된 변수 Date를 기준으로 나눈 뒤, 나뉘어진 조각마다 transform() 적용
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+ce <- ddply(cabbage_exp, "Date", transform, percent_weight = Weight / sum(Weight)*100)
+cabbage_exp
+ce
+ggplot(ce, aes(x=Date, y=percent_weight, fill=Cultivar))+
+  geom_bar(stat="identity", colour="black")+
+  guides(fill=guide_legend(reverse=TRUE))+
+  scale_fill_brewer(palette="Pastel1")
+```
+
+**3.9 막대 그래프에 라벨 추가하기**
+
+- 막대 라벨 추가 : geom_text()
+- interaction(): "."을 가운데 넣으면서 값을 이어붙여줌. 두개의 열을 합쳐서 보여줌(15장 13절)
+- vjust(vertical justification : 수직 맞춤) 설정으로 텍스트를 막대의 상단 위아래로 움직일 수 있음
+
+```{r fig.width=4, fig.height=3, message=FALSE}
+#라벨이 막대 위쪽 선으로부터 하단에 위치
+ggplot(cabbage_exp, aes(x=interaction(Date, Cultivar), y=Weight))+
+  geom_bar(stat="identity")+
+  geom_text(aes(label=Weight), vjust=1.5, colour="white")
+#라벨이 막대 위쪽 선으로부터 상단에 위치
+ggplot(cabbage_exp, aes(x=interaction(Date, Cultivar), y=Weight))+
+  geom_bar(stat="identity")+
+  geom_text(aes(label=Weight), vjust=-0.2)
+```
+
+- 라벨이 막대 위쪽 선 상단에 위치할 경우 위의 그림처럼 그래프 영역 밖으로 삐져나오거나 잘릴 수 있는데, 이를 해결하기 위해서는
+- 1) y 의 한계를 조금 높임: ylim()
+- 2) y의 위치를 막대의 위쪽 선보다 조금 높은 위치로 대입 (그래프의 y범위는 자동으로 조절)
+```{r fig.width=4, fig.height=4, message=FALSE}
+# 1) y 의 한계를 조금 높임
+ggplot(cabbage_exp, aes(x=interaction(Date, Cultivar), y=Weight))+
+  geom_bar(stat="identity")+
+  geom_text(aes(label=Weight), vjust=-0.2)+
+  ylim(0,max(cabbage_exp$Weight)*1.05)
+# 2) y의 위치를 막대의 위쪽 선보다 조금 높은 위치로 대입
+ggplot(cabbage_exp, aes(x=interaction(Date, Cultivar), y=Weight))+geom_bar(stat="identity")+geom_text(aes(y=Weight+0.1, label=Weight))
+```
+```{r fig.width=5, fig.height=3, message=FALSE}
+# 묶인 막대 그래프로 변환, 라벨텍스트 size 변경(기본은 5)
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(stat="identity", position="dodge")+
+  geom_text(aes(label=Weight), vjust=1.5, colour="white", position=position_dodge(0.9), size=3)
+```
+
+- 누적 막대그래프에 라벨을 달고 싶을 때는, 누적 합계가 맞게 계산되도록 먼저 데이터의 순서를 정렬함 : plyr 패키지의 arrange()
+- cabbage_exp의 데이터를 날짜(Date)와 품종(Cultivar)을 기준으로 정렬
+- ddply() 로 Date를 기준으로 데이터를 자르고, 잘린 데이터들 내 Weight값의 누적 합계를 계산하여 transform
+- cumsum(): cummulative sums. 여기서는 Date를 기준으로 데이터를 잘랐기 때문에 동일 Date 내에서만 누적 합계가 적용되는 듯??
+
+```{r fig.width=5, fig.height=4, message=FALSE}
+# ce : Date와 cultivar를 기준으로 정렬
+ce <- arrange(cabbage_exp, Date, Cultivar)
+# 누적 합계 얻기
+ce <- ddply(ce, "Date", transform, label_y=cumsum(Weight))
+ce
+ggplot(ce, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(stat="identity")+
+  geom_text(aes(y=label_y, label=Weight), vjust=1.5, colour="white" )
+```
+
+- 막대의 상단이 아닌 가운데에 라벨을 넣으려면 label_y의 값을 조정
+- 범례를 막대를 쌓은 순서와 동일하게 변경
+- 라벨 크기 줄임
+- 라벨값이 단위(kg) 붙임 : paste()
+- 라벨값의 소수점이 항상 두 자리가 되도록 설정: format()
+```{r fig.width=5, fig.height=4, message=FALSE}
+# 라벨의 y값 조정
+ce <- ddply(ce, "Date", transform, label_y=cumsum(Weight)-0.5*Weight)
+ggplot(ce, aes(x=Date, y=Weight, fill=Cultivar))+
+  geom_bar(stat="identity", colour="black")+
+  geom_text(aes(y=label_y, label=paste(format(Weight, nsmall=2), "kg")), size=4)+
+  guides(fill=guide_legend(reverse=TRUE))+scale_fill_brewer(palette="Pastel1")
+```
+
+**3.10 클리블랜드 점 그래프 그리기**
+
+- Cleveland Dot Plot : 막대그래프보다 시각적으로 덜 어수선하고 읽기 쉬움
+- geom_point() 사용
+```{r fig.width=4, fig.height=5, message=FALSE}
+# tophitters2001 데이터에서 1~25번째 데이터를 가져옴
+tophit <- tophitters2001[1:25, ]
+ggplot(tophit, aes(x=avg, y=name))+geom_point()
+```
+
+- name을 avg 순으로 정렬(문자열 벡터이기 대문에 기본 알파벳순 정렬) : 문자열 name을 요인(factor)로 만든 후 redorder(name, avg)
+- 점의 크기를 키우고, 테마 시스템을 사용하여 수직 격자를 없애고, 수평선을 점선으로(테마 사용하기 -> 9장 3절)
+```{r fig.width=4, fig.height=5, message=FALSE}
+ggplot(tophit, aes(x=avg, y=reorder(factor(name), avg)))+
+  geom_point(size=3)+
+  theme_bw()+
+  theme(panel.grid.major.x=element_blank(), 
+        panel.grid.minor.x=element_blank(),
+        panel.grid.major.y=element_line(colour="grey60", linetype="dashed"))
+```
+
+```{r fig.width=6, fig.height=4, message=FALSE}
+# x-y축을 바꾸고, 라벨을 60도 회전
+ggplot(tophit, aes(x=reorder(name, avg), y=avg))+
+  geom_point(size=3)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=60, hjust=1),
+        panel.grid.major.y=element_blank(), 
+        panel.grid.minor.y=element_blank(),
+        panel.grid.major.x=element_line(colour="grey60", linetype="dashed"))
+```
+
+- 제 3의 요인인 lg(National/American League)를 기준으로 집단 구분
+- 먼저 lg 기준으로 정렬 후 avg 기준으로 정렬...하고 싶은데,
+- reorder() 함수로는 한가지 요인 기준 정렬만 가능하므로, 수동으로 정렬
+
+```{r fig.width=4, fig.height=5, message=FALSE}
+# lg로 먼저, 그 다음 avg로 정렬한 이름을 가져온다
+nameorder <-tophit$name[order(tophit$lg, tophit$avg)]
+# name을 factor로 변환 - nameorder 순으로 정렬
+tophit$name <- factor(tophit$name, levels = nameorder)
+```
+
+- point의 colour에 lg를 대입
+- 그래프의 선이 점까지만 가도록 설정 :geom_segment()
+
+```{r fig.width=4, fig.height=5, message=FALSE}
+ggplot(tophit, aes(x=avg, y=name))+
+  geom_segment(aes(yend=name), xend=0, colour="grey50")+
+  geom_point(size=3, aes(colour=lg))+
+  scale_colour_brewer(palette="Set1", limit=c("NL","AL"))+
+  theme_bw()+
+  theme(panel.grid.major.y = element_blank(),  #수평 격자선 삭제
+        legend.position=c(1,0.55), # 범례를 그래프 안쪽으로 이동
+        legend.justification=c(1,0.5)) # 범례박스 위치 결정
+```
+
+- 면 분할(facet)을 사용하여 집단 구분하기
+```{r fig.width=4, fig.height=5, message=FALSE}
+ggplot(tophit, aes(x=avg, y=name))+
+  geom_segment(aes(yend=name), xend=0, colour="grey50")+
+  geom_point(size=3, aes(colour=lg))+
+  scale_colour_brewer(palette="Set1", limits=c("NL","AL"), guide=FALSE)+
+  theme_bw()+
+  theme(panel.grid.major.y = element_blank())+  #수평 격자선 삭제
+  facet_grid(lg ~ ., scales="free_y", space="free_y") #lg를 기준으로 면 분할
+```
