@@ -1216,7 +1216,7 @@ str(taiwan_shp)
 
 ### 일반적인 데이터 프레임으로 변환하면 다음과 같다. 
 taiwan_map <- fortify(taiwan_shp)
-taiwan_map
+head(taiwan_map)
     
 ### SpatialPolygonsDataFrame 객체를 직접 ggplot()에 전달하는 것도 가능하며, 
 ### 이 경우 자동으로 fortify가 적용된다. 
