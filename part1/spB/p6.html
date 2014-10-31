@@ -1,0 +1,66 @@
+<!doctype HTML>
+<meta charset = 'utf-8'>
+<html>
+  <head>
+    
+    <script src='//ramnathv.github.io/rCharts/libraries/widgets/polycharts/js/polychart2.standalone.js' type='text/javascript'></script>
+    
+    <style>
+    .rChart {
+      display: block;
+      margin-left: auto; 
+      margin-right: auto;
+      width: 800px;
+      height: 400px;
+    }  
+    </style>
+    
+  </head>
+  <body >
+    
+    <div id = 'chart26761fc559a6' class = 'rChart polycharts'></div>    
+    <script type='text/javascript'>
+    var chartParams = {
+ "dom": "chart26761fc559a6",
+"width":    800,
+"height":    400,
+"layers": [
+ {
+ "y": "y",
+"data": {
+ "x": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+"g": [ "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c" ],
+"y": [ 0.40481, 0.12826, 0.05122, 0.4831, 0.063899, 0.52791, 0.18349, 0.92138, 0.92099, 0.043617, 0.98636, 0.98775, 0.31631, 0.9659, 0.88333, 0.8913, 0.61092, 0.60934, 0.18906, 0.12136, 0.065625, 0.26786, 0.20093, 0.72225, 0.70494, 0.28698, 0.13091, 0.031405, 0.012684, 0.98944 ] 
+},
+"facet": "g",
+"color": "x",
+"type": "bar" 
+} 
+],
+"facet": {
+ "type": "wrap",
+"var": "g" 
+},
+"guides": {
+ "x": {
+ "position": "none",
+"padding":      0 
+},
+"y": {
+ "numticks":     10 
+} 
+},
+"coord": {
+ "type": "polar" 
+},
+"id": "chart26761fc559a6" 
+}
+    _.each(chartParams.layers, function(el){
+        el.data = polyjs.data(el.data)
+    })
+    var graph_chart26761fc559a6 = polyjs.chart(chartParams);
+</script>
+    
+    <script></script>    
+  </body>
+</html>
