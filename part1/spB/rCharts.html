@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>output: slidy_presentation</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<hr/>
+
+<p>title: &ldquo;rCharts&rdquo;</p>
+
+<h2>output: slidy_presentation</h2>
+
+<h2>install &amp; test</h2>
+
+<p>#install.packages(&ldquo;devtools&rdquo;)
+#require(devtools)
+#install_github(&#39;rCharts&#39;, &#39;ramnathv&#39;)</p>
+
+<pre><code class="r">require(rCharts)
+</code></pre>
+
+<pre><code>## Loading required package: rCharts
+</code></pre>
+
+<pre><code class="r">head(iris)
+</code></pre>
+
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+</code></pre>
+
+<pre><code class="r">names(iris)
+</code></pre>
+
+<pre><code>## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot; 
+## [5] &quot;Species&quot;
+</code></pre>
+
+<pre><code class="r">names(iris) = gsub(&quot;\\.&quot;, &quot;&quot;, names(iris))
+names(iris)
+</code></pre>
+
+<pre><code>## [1] &quot;SepalLength&quot; &quot;SepalWidth&quot;  &quot;PetalLength&quot; &quot;PetalWidth&quot;  &quot;Species&quot;
+</code></pre>
+
+<pre><code class="r">require(rCharts)
+require(knitr)
+opts_chunk$set(comment = NA, results = &quot;test&quot;, comment = NA, tidy = F)
+r1 &lt;- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = &#39;Species&#39;, type = &#39;point&#39;)
+r1$save(&#39;test.html&#39;, cdn = TRUE)
+r1$show(&#39;iframesrc&#39;, cdn = TRUE)
+</code></pre>
+
+<pre><code>## &lt;iframe srcdoc=&#39; &amp;lt;!doctype HTML&amp;gt;
+## &amp;lt;meta charset = &amp;#039;utf-8&amp;#039;&amp;gt;
+## &amp;lt;html&amp;gt;
+##   &amp;lt;head&amp;gt;
+##     
+##     &amp;lt;script src=&amp;#039;//ramnathv.github.io/rCharts/libraries/widgets/polycharts/js/polychart2.standalone.js&amp;#039; type=&amp;#039;text/javascript&amp;#039;&amp;gt;&amp;lt;/script&amp;gt;
+##     
+##     &amp;lt;style&amp;gt;
+##     .rChart {
+##       display: block;
+##       margin-left: auto; 
+##       margin-right: auto;
+##       width: 800px;
+##       height: 400px;
+##     }  
+##     &amp;lt;/style&amp;gt;
+##     
+##   &amp;lt;/head&amp;gt;
+##   &amp;lt;body &amp;gt;
+##     
+##     &amp;lt;div id = &amp;#039;chart32455af2b49d&amp;#039; class = &amp;#039;rChart polycharts&amp;#039;&amp;gt;&amp;lt;/div&amp;gt;    
+##     &amp;lt;script type=&amp;#039;text/javascript&amp;#039;&amp;gt;
+##     var chartParams = {
+##  &amp;quot;dom&amp;quot;: &amp;quot;chart32455af2b49d&amp;quot;,
+## &amp;quot;width&amp;quot;:    800,
+## &amp;quot;height&amp;quot;:    400,
+## &amp;quot;layers&amp;quot;: [
+##  {
+##  &amp;quot;x&amp;quot;: &amp;quot;SepalWidth&amp;quot;,
+## &amp;quot;y&amp;quot;: &amp;quot;SepalLength&amp;quot;,
+## &amp;quot;data&amp;quot;: {
+##  &amp;quot;SepalLength&amp;quot;: [    5.1,    4.9,    4.7,    4.6,      5,    5.4,    4.6,      5,    4.4,    4.9,    5.4,    4.8,    4.8,    4.3,    5.8,    5.7,    5.4,    5.1,    5.7,    5.1,    5.4,    5.1,    4.6,    5.1,    4.8,      5,      5,    5.2,    5.2,    4.7,    4.8,    5.4,    5.2,    5.5,    4.9,      5,    5.5,    4.9,    4.4,    5.1,      5,    4.5,    4.4,      5,    5.1,    4.8,    5.1,    4.6,    5.3,      5,      7,    6.4,    6.9,    5.5,    6.5,    5.7,    6.3,    4.9,    6.6,    5.2,      5,    5.9,      6,    6.1,    5.6,    6.7,    5.6,    5.8,    6.2,    5.6,    5.9,    6.1,    6.3,    6.1,    6.4,    6.6,    6.8,    6.7,      6,    5.7,    5.5,    5.5,    5.8,      6,    5.4,      6,    6.7,    6.3,    5.6,    5.5,    5.5,    6.1,    5.8,      5,    5.6,    5.7,    5.7,    6.2,    5.1,    5.7,    6.3,    5.8,    7.1,    6.3,    6.5,    7.6,    4.9,    7.3,    6.7,    7.2,    6.5,    6.4,    6.8,    5.7,    5.8,    6.4,    6.5,    7.7,    7.7,      6,    6.9,    5.6,    7.7,    6.3,    6.7,    7.2,    6.2,    6.1,    6.4,    7.2,    7.4,    7.9,    6.4,    6.3,    6.1,    7.7,    6.3,    6.4,      6,    6.9,    6.7,    6.9,    5.8,    6.8,    6.7,    6.7,    6.3,    6.5,    6.2,    5.9 ],
+## &amp;quot;SepalWidth&amp;quot;: [    3.5,      3,    3.2,    3.1,    3.6,    3.9,    3.4,    3.4,    2.9,    3.1,    3.7,    3.4,      3,      3,      4,    4.4,    3.9,    3.5,    3.8,    3.8,    3.4,    3.7,    3.6,    3.3,    3.4,      3,    3.4,    3.5,    3.4,    3.2,    3.1,    3.4,    4.1,    4.2,    3.1,    3.2,    3.5,    3.6,      3,    3.4,    3.5,    2.3,    3.2,    3.5,    3.8,      3,    3.8,    3.2,    3.7,    3.3,    3.2,    3.2,    3.1,    2.3,    2.8,    2.8,    3.3,    2.4,    2.9,    2.7,      2,      3,    2.2,    2.9,    2.9,    3.1,      3,    2.7,    2.2,    2.5,    3.2,    2.8,    2.5,    2.8,    2.9,      3,    2.8,      3,    2.9,    2.6,    2.4,    2.4,    2.7,    2.7,      3,    3.4,    3.1,    2.3,      3,    2.5,    2.6,      3,    2.6,    2.3,    2.7,      3,    2.9,    2.9,    2.5,    2.8,    3.3,    2.7,      3,    2.9,      3,      3,    2.5,    2.9,    2.5,    3.6,    3.2,    2.7,      3,    2.5,    2.8,    3.2,      3,    3.8,    2.6,    2.2,    3.2,    2.8,    2.8,    2.7,    3.3,    3.2,    2.8,      3,    2.8,      3,    2.8,    3.8,    2.8,    2.8,    2.6,      3,    3.4,    3.1,      3,    3.1,    3.1,    3.1,    2.7,    3.2,    3.3,      3,    2.5,      3,    3.4,      3 ],
+## &amp;quot;PetalLength&amp;quot;: [    1.4,    1.4,    1.3,    1.5,    1.4,    1.7,    1.4,    1.5,    1.4,    1.5,    1.5,    1.6,    1.4,    1.1,    1.2,    1.5,    1.3,    1.4,    1.7,    1.5,    1.7,    1.5,      1,    1.7,    1.9,    1.6,    1.6,    1.5,    1.4,    1.6,    1.6,    1.5,    1.5,    1.4,    1.5,    1.2,    1.3,    1.4,    1.3,    1.5,    1.3,    1.3,    1.3,    1.6,    1.9,    1.4,    1.6,    1.4,    1.5,    1.4,    4.7,    4.5,    4.9,      4,    4.6,    4.5,    4.7,    3.3,    4.6,    3.9,    3.5,    4.2,      4,    4.7,    3.6,    4.4,    4.5,    4.1,    4.5,    3.9,    4.8,      4,    4.9,    4.7,    4.3,    4.4,    4.8,      5,    4.5,    3.5,    3.8,    3.7,    3.9,    5.1,    4.5,    4.5,    4.7,    4.4,    4.1,      4,    4.4,    4.6,      4,    3.3,    4.2,    4.2,    4.2,    4.3,      3,    4.1,      6,    5.1,    5.9,    5.6,    5.8,    6.6,    4.5,    6.3,    5.8,    6.1,    5.1,    5.3,    5.5,      5,    5.1,    5.3,    5.5,    6.7,    6.9,      5,    5.7,    4.9,    6.7,    4.9,    5.7,      6,    4.8,    4.9,    5.6,    5.8,    6.1,    6.4,    5.6,    5.1,    5.6,    6.1,    5.6,    5.5,    4.8,    5.4,    5.6,    5.1,    5.1,    5.9,    5.7,    5.2,      5,    5.2,    5.4,    5.1 ],
+## &amp;quot;PetalWidth&amp;quot;: [    0.2,    0.2,    0.2,    0.2,    0.2,    0.4,    0.3,    0.2,    0.2,    0.1,    0.2,    0.2,    0.1,    0.1,    0.2,    0.4,    0.4,    0.3,    0.3,    0.3,    0.2,    0.4,    0.2,    0.5,    0.2,    0.2,    0.4,    0.2,    0.2,    0.2,    0.2,    0.4,    0.1,    0.2,    0.2,    0.2,    0.2,    0.1,    0.2,    0.2,    0.3,    0.3,    0.2,    0.6,    0.4,    0.3,    0.2,    0.2,    0.2,    0.2,    1.4,    1.5,    1.5,    1.3,    1.5,    1.3,    1.6,      1,    1.3,    1.4,      1,    1.5,      1,    1.4,    1.3,    1.4,    1.5,      1,    1.5,    1.1,    1.8,    1.3,    1.5,    1.2,    1.3,    1.4,    1.4,    1.7,    1.5,      1,    1.1,      1,    1.2,    1.6,    1.5,    1.6,    1.5,    1.3,    1.3,    1.3,    1.2,    1.4,    1.2,      1,    1.3,    1.2,    1.3,    1.3,    1.1,    1.3,    2.5,    1.9,    2.1,    1.8,    2.2,    2.1,    1.7,    1.8,    1.8,    2.5,      2,    1.9,    2.1,      2,    2.4,    2.3,    1.8,    2.2,    2.3,    1.5,    2.3,      2,      2,    1.8,    2.1,    1.8,    1.8,    1.8,    2.1,    1.6,    1.9,      2,    2.2,    1.5,    1.4,    2.3,    2.4,    1.8,    1.8,    2.1,    2.4,    2.3,    1.9,    2.3,    2.5,    2.3,    1.9,      2,    2.3,    1.8 ],
+## &amp;quot;Species&amp;quot;: [ &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot; ] 
+## },
+## &amp;quot;facet&amp;quot;: &amp;quot;Species&amp;quot;,
+## &amp;quot;color&amp;quot;: &amp;quot;Species&amp;quot;,
+## &amp;quot;type&amp;quot;: &amp;quot;point&amp;quot; 
+## } 
+## ],
+## &amp;quot;facet&amp;quot;: {
+##  &amp;quot;type&amp;quot;: &amp;quot;wrap&amp;quot;,
+## &amp;quot;var&amp;quot;: &amp;quot;Species&amp;quot; 
+## },
+## &amp;quot;guides&amp;quot;: [],
+## &amp;quot;coord&amp;quot;: [],
+## &amp;quot;id&amp;quot;: &amp;quot;chart32455af2b49d&amp;quot; 
+## }
+##     _.each(chartParams.layers, function(el){
+##         el.data = polyjs.data(el.data)
+##     })
+##     var graph_chart32455af2b49d = polyjs.chart(chartParams);
+## &amp;lt;/script&amp;gt;
+##     
+##     &amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;    
+##   &amp;lt;/body&amp;gt;
+## &amp;lt;/html&amp;gt; &#39; scrolling=&#39;no&#39; frameBorder=&#39;0&#39; seamless class=&#39;rChart  polycharts  &#39; id=&#39;iframe-chart32455af2b49d&#39;&gt; &lt;/iframe&gt;
+##  &lt;style&gt;iframe.rChart{ width: 100%; height: 400px;}&lt;/style&gt;
+</code></pre>
+
+<pre><code class="r"># &lt;iframe width = &quot;800&quot; height = &quot;600&quot; src=&#39;r1.html&#39;&gt;&lt;/iframe&gt;
+</code></pre>
+
+<iframe width = 100% height = 60% src='test.html'></iframe>
+
+<h2>Polycharts</h2>
+
+<pre><code class="r">head(mtcars)
+</code></pre>
+
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+</code></pre>
+
+<pre><code class="r">r2 &lt;- rPlot(mpg ~ wt, data = mtcars, type = &#39;point&#39;)
+r2$save(&#39;r2.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='r2.html'></iframe>
+
+<h3>rCharts Polychart: Adding horizontal or vertical lines to a plot</h3>
+
+<p><a href="http://stackoverflow.com/questions/20107947/rcharts-polychart-adding-horizontal-or-vertical-lines-to-a-plot">http://stackoverflow.com/questions/20107947/rcharts-polychart-adding-horizontal-or-vertical-lines-to-a-plot</a></p>
+
+<pre><code class="r">mtcars$avg &lt;- mean(mtcars$mpg)
+mtcars$sdplus &lt;- mtcars$avg + sd(mtcars$mpg)
+mtcars$sdneg &lt;-  mtcars$avg - sd(mtcars$mpg)
+p1 &lt;- rPlot(mpg~wt, data=mtcars, type=&#39;point&#39;)
+
+p1$layer(y=&#39;avg&#39;, copy_layer=T, type=&#39;line&#39;, color=list(const=&#39;red&#39;))
+p1$layer(y=&#39;sdplus&#39;, copy_layer=T, type=&#39;line&#39;, color=list(const=&#39;green&#39;))
+p1$layer(y=&#39;sdneg&#39;, copy_layer=T, type=&#39;line&#39;, color=list(const=&#39;green&#39;))
+
+p1$save(&#39;p1.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='p1.html'></iframe>
+
+<h3>다양한 polycharts</h3>
+
+<p><a href="https://rpubs.com/kohske/12331">https://rpubs.com/kohske/12331</a></p>
+
+<ul>
+<li>point</li>
+</ul>
+
+<pre><code class="r">p2 &lt;- rPlot( mpg ~ qsec, data = mtcars, color = &quot;cyl&quot;, size = &quot;disp&quot;, type = &quot;point&quot;)
+
+p2$layer(tooltip = &quot;#! function(i) {return &#39;gear &#39; + i.gear + &#39; level&#39;;} !#&quot;, copy_layer = TRUE)
+
+# p$show(&quot;inline&quot;, include_assets = FALSE) 
+
+p2$save(&#39;p2.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='p2.html'></iframe>
+
+<ul>
+<li>line + point</li>
+</ul>
+
+<pre><code class="r">d &lt;- expand.grid(x = 1:10, g = letters[1:3])
+d$y &lt;- rnorm(nrow(d))
+p3 &lt;- rPlot( y ~ x, data = d, color = &quot;g&quot;, type = &quot;line&quot;)
+p3$layer(y ~ x, data = d, color = &quot;g&quot;, type = &quot;point&quot;)
+p3$set(title = &quot;line + point&quot;)
+# p3$show(&quot;inline&quot;, include_assets = FALSE)
+p3$save(&#39;p3.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='p3.html'></iframe>
+
+<ul>
+<li>area</li>
+</ul>
+
+<pre><code class="r">d &lt;- expand.grid(x = 1:10, g = letters[1:3])
+d$y &lt;- runif(nrow(d))
+p4 &lt;- rPlot( y ~ x, data = d, color = &quot;g&quot;, type = &quot;area&quot;)
+# p4$guides(&quot;#! {y: {title: &#39;hoge&#39;, scale: {type: &#39;log&#39;}}}&quot;)
+p4$guides(x = list(title = &quot;XXXX&quot;), y = list(title = &quot;YYYY&quot;))
+# p4$show(&quot;inline&quot;, include_assets = FALSE)
+p4$save(&#39;p4.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='p4.html'></iframe>
+
+<ul>
+<li>bar</li>
+</ul>
+
+<pre><code class="r">hair_eye &lt;- as.data.frame(HairEyeColor)
+
+p5 &lt;- rPlot(Freq ~ Hair | Sex, color = &quot;Eye&quot;, data = hair_eye, type = &quot;bar&quot;, position = &quot;dodge&quot;)
+
+p5$save(&#39;p5.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='p5.html'></iframe>
+
+<ul>
+<li>극좌표</li>
+</ul>
+
+<pre><code class="r">d &lt;- expand.grid(x = 1:10, g = letters[1:3])
+d$y &lt;- runif(nrow(d))
+
+p6 &lt;- rPlot(y ~ x | g, color = &quot;x&quot;, data = d, type = &quot;bar&quot;)
+
+p6$params$layers[[1]]$x &lt;- NULL # x 삭제
+p6$coord(type = &quot;polar&quot;) # 파이차트
+
+p6$guides(x = list(position = &quot;none&quot;, padding = 0), y = list(numticks=10)) # 축 변경
+
+p6$save(&#39;p6.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='p6.html'></iframe>
+
+<h2>Morris</h2>
+
+<pre><code class="r">data(economics, package = &quot;ggplot2&quot;)
+econ &lt;- transform(economics, date = as.character(date))
+m1 &lt;- mPlot(x = &quot;date&quot;, y = c(&quot;psavert&quot;, &quot;uempmed&quot;), type = &quot;Line&quot;, data = econ)
+m1$set(pointSize = 0, lineWidth = 1)
+m1$save(&#39;m1.html&#39;, cdn = TRUE)
+</code></pre>
+
+<pre><code>Loading required package: reshape2
+</code></pre>
+
+<iframe width = 100% height = 60% src='m1.html'></iframe>
+
+<h3>다양한 polycharts</h3>
+
+<p><a href="https://rpubs.com/kohske/12406">https://rpubs.com/kohske/12406</a></p>
+
+<ul>
+<li>line 1</li>
+</ul>
+
+<pre><code class="r"># plot 생성
+m2 &lt;- mPlot(y ~ x, data = data.frame(x = paste(2001:2005), y = rnorm(1:5)), type = &quot;Line&quot;, smooth = FALSE)
+# grid &amp; axes 설정
+m2$set(grid = FALSE, axes = FALSE)
+# line color
+m2$set(lineColors = list(&quot;skyblue&quot;))
+# p$show(&quot;inline&quot;, include_assets = FALSE)
+m2$save(&#39;m2.html&#39;, cdn = TRUE)
+## Loading required package: reshape2
+</code></pre>
+
+<iframe width = 100% height = 60% src='m2.html'></iframe>
+
+<ul>
+<li>line 2</li>
+</ul>
+
+<pre><code class="r">d &lt;- data.frame(x = paste(2001:2010), y1 = runif(10), y2 = runif(10))
+m3 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;), data = d, type = &quot;Line&quot;, labels = c(&quot;line 1&quot;, &quot;line 2&quot;))
+m3$save(&#39;m3.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='m3.html'></iframe>
+
+<ul>
+<li>시계열 영역 차트</li>
+</ul>
+
+<pre><code class="r">d &lt;- data.frame(x = paste(2001:2010), y1 = runif(10), y2 = runif(10), y3 = runif(10))
+
+m4 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;, &quot;y3&quot;), data = d, type = &quot;Area&quot;, smooth=FALSE, pointSize = 10, lineWidth = 5)
+
+# event 옵션추가
+m4$set(events = paste(c(2004, 2008)), eventStrokeWidth = 10)
+m4$save(&#39;m4.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='m4.html'></iframe>
+
+<ul>
+<li>사용자정의 popup tooltip</li>
+</ul>
+
+<pre><code class="r">d &lt;- data.frame(x = paste(2001:2010), y1 = runif(10), y2 = runif(10), ch = letters[1:10])
+m5 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;), data = d, type = &quot;Line&quot;, labels = c(&quot;line 1&quot;, &quot;line 2&quot;))
+# tooltip 에 대한 콜백함수 설정
+m5$set(hoverCallback = &quot;#! function (index, options, content) {return options.data[index].ch;} !#&quot;)
+m5$save(&#39;m5.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='m5.html'></iframe>
+
+<ul>
+<li>bar 1</li>
+</ul>
+
+<pre><code class="r">d &lt;- data.frame(x = paste(2001:2010), y1 = runif(10), y2 = runif(10), y3 = runif(10))
+m6 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;, &quot;y3&quot;), data = d, type = &quot;Bar&quot;, barColors = c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;))
+m6$save(&#39;m6.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='m6.html'></iframe>
+
+<ul>
+<li>bar 2 ; stacked</li>
+</ul>
+
+<pre><code class="r">d &lt;- data.frame(x = paste(2001:2010), y1 = runif(10), y2 = runif(10), y3 = runif(10))
+
+m7 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;, &quot;y3&quot;), data = d, type = &quot;Bar&quot;, stacked = TRUE, barColors = c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;))
+
+m7$save(&#39;m7.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60% src='m7.html'></iframe>
+
+<ul>
+<li>도넛차트</li>
+</ul>
+
+<pre><code class="r">d &lt;- data.frame(label = c(&quot;&#39;92 live&quot;, &quot;&#39;95 secret&quot;, &quot;&#39;98 age&quot;, &quot;&#39;02 garden&quot;), value = c(32, 30, 25, 38))
+m8 &lt;- mPlot(x = NULL, y = NULL, data = d, type = &quot;Donut&quot;, formatter = &quot;#! function (y) { return(&#39;rate&#39;+y+&#39;%!!&#39;); } !#&quot;)
+
+m8$save(&#39;m8.html&#39;, cdn = TRUE)
+</code></pre>
+
+<pre><code>The following `from` values were not present in `x`: x
+</code></pre>
+
+<iframe width = 100% height = 60% src='m8.html'></iframe>
+
+<h2>nvd3</h2>
+
+<h3>Why?????????????</h3>
+
+<pre><code class="r">hair_eye = as.data.frame(HairEyeColor)
+r3 &lt;- nPlot(Freq ~ Hair, group = &#39;Eye&#39;,data = subset(hair_eye, Sex ==&quot;Female&quot;,type = &#39;multiBarChart&#39;))
+r3$chart(color = c(&#39;brown&#39;, &#39;blue&#39;, &#39;#594c26&#39;, &#39;green&#39;))
+r3$save(&#39;r3.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60%  src='r3.html'></iframe>
+
+<h2>xCharts</h2>
+
+<pre><code class="r">library(reshape2)
+uspexp &lt;- melt(USPersonalExpenditure)
+names(uspexp)[1:2] = c(&quot;category&quot;, &quot;year&quot;)
+x1 &lt;- xPlot(value ~ year, group = &quot;category&quot;, data = uspexp, type = &quot;line-dotted&quot;)
+x1$save(&#39;x1.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60%  src='x1.html'></iframe>
+
+<h2>Rickshaw</h2>
+
+<pre><code class="r">head(USPersonalExpenditure)
+</code></pre>
+
+<pre><code>                      1940   1945  1950 1955  1960
+Food and Tobacco    22.200 44.500 59.60 73.2 86.80
+Household Operation 10.500 15.500 29.00 36.5 46.20
+Medical and Health   3.530  5.760  9.71 14.0 21.10
+Personal Care        1.040  1.980  2.45  3.4  5.40
+Private Education    0.341  0.974  1.80  2.6  3.64
+</code></pre>
+
+<pre><code class="r">usp = reshape2::melt(USPersonalExpenditure)
+head(usp)
+</code></pre>
+
+<pre><code>                 Var1 Var2  value
+1    Food and Tobacco 1940 22.200
+2 Household Operation 1940 10.500
+3  Medical and Health 1940  3.530
+4       Personal Care 1940  1.040
+5   Private Education 1940  0.341
+6    Food and Tobacco 1945 44.500
+</code></pre>
+
+<pre><code class="r">tail(usp)
+</code></pre>
+
+<pre><code>                  Var1 Var2 value
+20   Private Education 1955  2.60
+21    Food and Tobacco 1960 86.80
+22 Household Operation 1960 46.20
+23  Medical and Health 1960 21.10
+24       Personal Care 1960  5.40
+25   Private Education 1960  3.64
+</code></pre>
+
+<pre><code class="r">tt &lt;- as.POSIXct(paste0(usp$Var2, &quot;-01-01&quot;))
+tt
+</code></pre>
+
+<pre><code> [1] &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot;
+ [5] &quot;1940-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot;
+ [9] &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot;
+[13] &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1955-01-01 KST&quot;
+[17] &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot;
+[21] &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot;
+[25] &quot;1960-01-01 KST&quot;
+</code></pre>
+
+<pre><code class="r">usp$Var2 &lt;- as.numeric(as.POSIXct(paste0(usp$Var2, &quot;-01-01&quot;)))
+usp$Var2 
+</code></pre>
+
+<pre><code> [1] -946803600 -946803600 -946803600 -946803600 -946803600 -788950800
+ [7] -788950800 -788950800 -788950800 -788950800 -631184400 -631184400
+[13] -631184400 -631184400 -631184400 -473414400 -473414400 -473414400
+[19] -473414400 -473414400 -315648000 -315648000 -315648000 -315648000
+[25] -315648000
+</code></pre>
+
+<pre><code class="r">pp4 &lt;- Rickshaw$new()
+
+pp4$layer(value ~ Var2, group = &quot;Var1&quot;, data = usp, type = &quot;area&quot;)
+pp4$set(slider = TRUE)
+
+pp4$save(&#39;pp4.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60%  src='pp4.html'></iframe>
+
+<h2>Leaflet</h2>
+
+<p><a href="http://leafletjs.com/">http://leafletjs.com/</a></p>
+
+<pre><code class="r">map3 &lt;- Leaflet$new()
+map3$setView(c(37.5414623,127.0722618), zoom = 17)
+map3$marker(c(37.5414623,127.0722618), bindPopup = &quot;&lt;p&gt; Hi. I&#39;m Here! &lt;/p&gt;&quot;)
+
+map3$save(&#39;map3.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60%  src='map3.html'></iframe>
+
+<h2>Interactive Controls and rCharts 1</h2>
+
+<p>참고 : <a href="http://rcharts.io/icontrols/#.VE4CJCKsV8E">http://rcharts.io/icontrols/#.VE4CJCKsV8E</a></p>
+
+<pre><code class="r">n1 &lt;- rPlot(mpg ~ wt, data = mtcars, color = &quot;gear&quot;, type = &quot;point&quot;)
+n1$save(&#39;n1.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60%  src='n1.html'></iframe>
+
+<pre><code class="r">n1$addControls(&quot;x&quot;, value = &quot;wt&quot;, values = names(mtcars))
+n1$addControls(&quot;y&quot;, value = &quot;wt&quot;, values = names(mtcars))
+n1$addControls(&quot;color&quot;, value = &quot;gear&quot;, values = names(mtcars))
+n1$save(&#39;n2.html&#39;, cdn = TRUE)
+</code></pre>
+
+<p><a href="http://stackoverflow.com/questions/21820197/nplot-in-rcharts-does-not-work-with-addcontrols">http://stackoverflow.com/questions/21820197/nplot-in-rcharts-does-not-work-with-addcontrols</a></p>
+
+<ul>
+<li>The addControls method has not been implemented for all libraries. It only works for nvd3, polychart and dimple. </li>
+</ul>
+
+<iframe width = 100% height = 60%  src='n2.html'></iframe>
+
+<h2>Interactive Controls and rCharts 2</h2>
+
+<h3>rCharts dimple with Angular Controls</h3>
+
+<p>참고 : <a href="http://bl.ocks.org/timelyportfolio/6459298#code.R">http://bl.ocks.org/timelyportfolio/6459298#code.R</a></p>
+
+<pre><code class="r">data &lt;- read.delim(
+&quot;http://pmsi-alignalytics.github.io/dimple/data/example_data.tsv&quot;
+)
+
+#eliminate . to avoid confusion in javascript
+colnames(data) &lt;- gsub(&quot;[.]&quot;,&quot;&quot;,colnames(data))
+d1 &lt;- dPlot(
+x =&quot;Month&quot; ,
+y = &quot;UnitSales&quot;,
+data = data,
+type = &quot;area&quot;
+)
+
+d1$xAxis(orderRule = &quot;Date&quot;)
+d1$addControls(&quot;y&quot;, value = &quot;UnitSales&quot;, values = names(data))
+d1$addControls(&quot;groups&quot;, value = &quot;&quot;, values = names(data))
+d1$save(&#39;d1.html&#39;, cdn = TRUE)
+</code></pre>
+
+<iframe width = 100% height = 60%  src='d1.html'></iframe>
+
+<h2>Interactive Controls and rCharts 3</h2>
+
+<p>참고 : <a href="http://www.r-bloggers.com/interactive-charts-with-rcharts/">http://www.r-bloggers.com/interactive-charts-with-rcharts/</a></p>
+
+</body>
+
+</html>
+
