@@ -84,10 +84,10 @@ r1$show('iframesrc', cdn = TRUE)
 ##   &lt;/head&gt;
 ##   &lt;body &gt;
 ##     
-##     &lt;div id = &#039;chart29527297dc82&#039; class = &#039;rChart polycharts&#039;&gt;&lt;/div&gt;    
+##     &lt;div id = &#039;chart2e5967875327&#039; class = &#039;rChart polycharts&#039;&gt;&lt;/div&gt;    
 ##     &lt;script type=&#039;text/javascript&#039;&gt;
 ##     var chartParams = {
-##  &quot;dom&quot;: &quot;chart29527297dc82&quot;,
+##  &quot;dom&quot;: &quot;chart2e5967875327&quot;,
 ## &quot;width&quot;:    800,
 ## &quot;height&quot;:    400,
 ## &quot;layers&quot;: [
@@ -112,17 +112,17 @@ r1$show('iframesrc', cdn = TRUE)
 ## },
 ## &quot;guides&quot;: [],
 ## &quot;coord&quot;: [],
-## &quot;id&quot;: &quot;chart29527297dc82&quot; 
+## &quot;id&quot;: &quot;chart2e5967875327&quot; 
 ## }
 ##     _.each(chartParams.layers, function(el){
 ##         el.data = polyjs.data(el.data)
 ##     })
-##     var graph_chart29527297dc82 = polyjs.chart(chartParams);
+##     var graph_chart2e5967875327 = polyjs.chart(chartParams);
 ## &lt;/script&gt;
 ##     
 ##     &lt;script&gt;&lt;/script&gt;    
 ##   &lt;/body&gt;
-## &lt;/html&gt; ' scrolling='no' frameBorder='0' seamless class='rChart  polycharts  ' id='iframe-chart29527297dc82'> </iframe>
+## &lt;/html&gt; ' scrolling='no' frameBorder='0' seamless class='rChart  polycharts  ' id='iframe-chart2e5967875327'> </iframe>
 ##  <style>iframe.rChart{ width: 100%; height: 400px;}</style>
 ```
 

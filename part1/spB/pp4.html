@@ -40,17 +40,17 @@
   </head>
   <body>
     <div class='chart_container'>
-      <div id='yAxischart295257df2b99' class='yAxis'></div>
-      <div id='chart295257df2b99' class='rChart rickshaw'></div>
-      <div id='xAxischart295257df2b99' class='xAxis'></div>
-      <div id='legendchart295257df2b99' class='legend'></div>
-      <div id='sliderchart295257df2b99' class='slider'></div>
+      <div id='yAxischart2e5943f8de1d' class='yAxis'></div>
+      <div id='chart2e5943f8de1d' class='rChart rickshaw'></div>
+      <div id='xAxischart2e5943f8de1d' class='xAxis'></div>
+      <div id='legendchart2e5943f8de1d' class='legend'></div>
+      <div id='sliderchart2e5943f8de1d' class='slider'></div>
     </div>
     
     <script type='text/javascript'> 
   var palette = new Rickshaw.Color.Palette({ scheme: "colorwheel" });
   var chartParams = {
- "dom": "chart295257df2b99",
+ "dom": "chart2e5943f8de1d",
 "width":            800,
 "height":            400,
 "scheme": "colorwheel",
@@ -297,45 +297,45 @@
 } 
 ],
 "renderer": "area",
-"id": "chart295257df2b99" 
+"id": "chart2e5943f8de1d" 
 }
-  chartParams.element = document.querySelector('#chart295257df2b99')
+  chartParams.element = document.querySelector('#chart2e5943f8de1d')
   
-  var graphchart295257df2b99 = new Rickshaw.Graph(chartParams);
+  var graphchart2e5943f8de1d = new Rickshaw.Graph(chartParams);
   
-  graphchart295257df2b99.render();
+  graphchart2e5943f8de1d.render();
   
-  var xAxischart295257df2b99 = new Rickshaw.Graph.Axis.Time({
- "graph":  graphchart295257df2b99  
+  var xAxischart2e5943f8de1d = new Rickshaw.Graph.Axis.Time({
+ "graph":  graphchart2e5943f8de1d  
 })
-var yAxischart295257df2b99 = new Rickshaw.Graph.Axis.Y({
- "graph":  graphchart295257df2b99 ,
+var yAxischart2e5943f8de1d = new Rickshaw.Graph.Axis.Y({
+ "graph":  graphchart2e5943f8de1d ,
 "orientation": "left",
-"element":  document.getElementById('yAxischart295257df2b99') ,
+"element":  document.getElementById('yAxischart2e5943f8de1d') ,
 "tickFormat":  Rickshaw.Fixtures.Number.formatKMBT  
 })
-graphchart295257df2b99.render()
-var legendchart295257df2b99 = new Rickshaw.Graph.Legend({
- "graph":  graphchart295257df2b99 ,
-"element":  document.getElementById('legendchart295257df2b99')  
+graphchart2e5943f8de1d.render()
+var legendchart2e5943f8de1d = new Rickshaw.Graph.Legend({
+ "graph":  graphchart2e5943f8de1d ,
+"element":  document.getElementById('legendchart2e5943f8de1d')  
 })
-var shelvingchart295257df2b99 = new Rickshaw.Graph.Behavior.Series.Toggle({
- "graph":  graphchart295257df2b99 ,
-"legend":  legendchart295257df2b99  
+var shelvingchart2e5943f8de1d = new Rickshaw.Graph.Behavior.Series.Toggle({
+ "graph":  graphchart2e5943f8de1d ,
+"legend":  legendchart2e5943f8de1d  
 })
-var hoverDetailchart295257df2b99 = new Rickshaw.Graph.HoverDetail({
- "graph":  graphchart295257df2b99  
+var hoverDetailchart2e5943f8de1d = new Rickshaw.Graph.HoverDetail({
+ "graph":  graphchart2e5943f8de1d  
 })
-var highlightchart295257df2b99 = new Rickshaw.Graph.Behavior.Series.Highlight({
- "graph":  graphchart295257df2b99 ,
-"legend":  legendchart295257df2b99  
+var highlightchart2e5943f8de1d = new Rickshaw.Graph.Behavior.Series.Highlight({
+ "graph":  graphchart2e5943f8de1d ,
+"legend":  legendchart2e5943f8de1d  
 })
-var sliderchart295257df2b99 = new Rickshaw.Graph.RangeSlider({
- "graph":  graphchart295257df2b99 ,
-"element":  document.getElementById('sliderchart295257df2b99')  
+var sliderchart2e5943f8de1d = new Rickshaw.Graph.RangeSlider({
+ "graph":  graphchart2e5943f8de1d ,
+"element":  document.getElementById('sliderchart2e5943f8de1d')  
 })
   
-  graphchart295257df2b99.render();
+  graphchart2e5943f8de1d.render();
   
 </script> 
     
