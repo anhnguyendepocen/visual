@@ -264,11 +264,9 @@ m8$save('m8.html', cdn = TRUE)
 
 ## nvd3
 
-### Why?????????????
-
 ```{r}
 hair_eye = as.data.frame(HairEyeColor)
-r3 <- nPlot(Freq ~ Hair, group = 'Eye',data = subset(hair_eye, Sex =="Female",type = 'multiBarChart'))
+r3 <- nPlot(Freq ~ Hair, group = 'Eye',data = subset(hair_eye, Sex =="Female"),type = 'multiBarChart')
 r3$chart(color = c('brown', 'blue', '#594c26', 'green'))
 r3$save('r3.html', cdn = TRUE)
 

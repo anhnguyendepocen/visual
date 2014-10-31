@@ -466,10 +466,8 @@ m8$save(&#39;m8.html&#39;, cdn = TRUE)
 
 <h2>nvd3</h2>
 
-<h3>Why?????????????</h3>
-
 <pre><code class="r">hair_eye = as.data.frame(HairEyeColor)
-r3 &lt;- nPlot(Freq ~ Hair, group = &#39;Eye&#39;,data = subset(hair_eye, Sex ==&quot;Female&quot;,type = &#39;multiBarChart&#39;))
+r3 &lt;- nPlot(Freq ~ Hair, group = &#39;Eye&#39;,data = subset(hair_eye, Sex ==&quot;Female&quot;),type = &#39;multiBarChart&#39;)
 r3$chart(color = c(&#39;brown&#39;, &#39;blue&#39;, &#39;#594c26&#39;, &#39;green&#39;))
 r3$save(&#39;r3.html&#39;, cdn = TRUE)
 </code></pre>
