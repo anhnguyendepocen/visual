@@ -8,9 +8,9 @@ output: slidy_presentation
 
 ## install & test
 
-#install.packages("devtools")
-#require(devtools)
-#install_github('rCharts', 'ramnathv')
+install.packages("devtools")
+require(devtools)
+install_github('rCharts', 'ramnathv')
 
 ```{r}
 require(rCharts)
@@ -23,16 +23,14 @@ names(iris)
 
 ```{r}
 require(rCharts)
-require(knitr)
-opts_chunk$set(comment = NA, results = "test", comment = NA, tidy = F)
 r1 <- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = 'Species', type = 'point')
 r1$save('test.html', cdn = TRUE)
-r1$show('iframesrc', cdn = TRUE)
+
 # <iframe width = "800" height = "600" src='r1.html'></iframe>
 ```
 
 
-<iframe width = 100% height = 60% src='test.html'></iframe>
+<iframe width = "800" height = "600" src='test.html'></iframe>
 
 
 
@@ -46,7 +44,7 @@ r2$save('r2.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60% src='r2.html'></iframe>
+<iframe width = "800" height = "600" src='r2.html'></iframe>
 
 
 ### rCharts Polychart: Adding horizontal or vertical lines to a plot
@@ -69,7 +67,7 @@ p1$save('p1.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60% src='p1.html'></iframe>
+<iframe width = "800" height = "600" src='p1.html'></iframe>
 
 ### 다양한 polycharts
 
@@ -88,7 +86,7 @@ p2$save('p2.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60% src='p2.html'></iframe>
+<iframe width = "800" height = "600" src='p2.html'></iframe>
 
 
 - line + point
@@ -103,7 +101,7 @@ p3$set(title = "line + point")
 p3$save('p3.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='p3.html'></iframe>
+<iframe width = "800" height = "600" src='p3.html'></iframe>
 
 - area
 
@@ -117,7 +115,7 @@ p4$guides(x = list(title = "XXXX"), y = list(title = "YYYY"))
 p4$save('p4.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='p4.html'></iframe>
+<iframe width = "800" height = "600" src='p4.html'></iframe>
 
 
 - bar
@@ -130,7 +128,7 @@ p5 <- rPlot(Freq ~ Hair | Sex, color = "Eye", data = hair_eye, type = "bar", pos
 p5$save('p5.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='p5.html'></iframe>
+<iframe width = "800" height = "600" src='p5.html'></iframe>
 
 
 - 극좌표
@@ -150,7 +148,7 @@ p6$guides(x = list(position = "none", padding = 0), y = list(numticks=10)) # 축
 p6$save('p6.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='p6.html'></iframe>
+<iframe width = "800" height = "600" src='p6.html'></iframe>
 
 
 
@@ -164,7 +162,7 @@ m1$set(pointSize = 0, lineWidth = 1)
 m1$save('m1.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='m1.html'></iframe>
+<iframe width = "800" height = "600" src='m1.html'></iframe>
 
 ### 다양한 polycharts
 
@@ -184,7 +182,7 @@ m2$save('m2.html', cdn = TRUE)
 ## Loading required package: reshape2
 ```
 
-<iframe width = 100% height = 60% src='m2.html'></iframe>
+<iframe width = "800" height = "600" src='m2.html'></iframe>
 
 - line 2
 
@@ -195,7 +193,7 @@ m3$save('m3.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60% src='m3.html'></iframe>
+<iframe width = "800" height = "600" src='m3.html'></iframe>
 
 - 시계열 영역 차트
 
@@ -210,7 +208,7 @@ m4$save('m4.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60% src='m4.html'></iframe>
+<iframe width = "800" height = "600" src='m4.html'></iframe>
 
 - 사용자정의 popup tooltip
 
@@ -222,7 +220,7 @@ m5$set(hoverCallback = "#! function (index, options, content) {return options.da
 m5$save('m5.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='m5.html'></iframe>
+<iframe width = "800" height = "600" src='m5.html'></iframe>
 
 
 
@@ -234,7 +232,7 @@ m6 <- mPlot(x = "x", y = c("y1", "y2", "y3"), data = d, type = "Bar", barColors 
 m6$save('m6.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='m6.html'></iframe>
+<iframe width = "800" height = "600" src='m6.html'></iframe>
 
 
 - bar 2 ; stacked
@@ -247,7 +245,7 @@ m7 <- mPlot(x = "x", y = c("y1", "y2", "y3"), data = d, type = "Bar", stacked = 
 m7$save('m7.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='m7.html'></iframe>
+<iframe width = "800" height = "600" src='m7.html'></iframe>
 
 
 - 도넛차트
@@ -259,7 +257,7 @@ m8 <- mPlot(x = NULL, y = NULL, data = d, type = "Donut", formatter = "#! functi
 m8$save('m8.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60% src='m8.html'></iframe>
+<iframe width = "800" height = "600" src='m8.html'></iframe>
 
 
 
@@ -276,7 +274,7 @@ r3$save('r3.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60%  src='r3.html'></iframe>
+<iframe width = "800" height = "600"  src='r3.html'></iframe>
 
 
 
@@ -291,7 +289,7 @@ x1$save('x1.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60%  src='x1.html'></iframe>
+<iframe width = "800" height = "600"  src='x1.html'></iframe>
 
 
 
@@ -316,7 +314,7 @@ pp4$save('pp4.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60%  src='pp4.html'></iframe>
+<iframe width = "800" height = "600"  src='pp4.html'></iframe>
 
 
 
@@ -335,7 +333,7 @@ map3$save('map3.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60%  src='map3.html'></iframe>
+<iframe width = "800" height = "600"  src='map3.html'></iframe>
 
 
 
@@ -350,7 +348,7 @@ n1$save('n1.html', cdn = TRUE)
 
 ```
 
-<iframe width = 100% height = 60%  src='n1.html'></iframe>
+<iframe width = "800" height = "600"  src='n1.html'></iframe>
 
 
 ```{r}
@@ -364,7 +362,7 @@ n1$save('n2.html', cdn = TRUE)
 
 - The addControls method has not been implemented for all libraries. It only works for nvd3, polychart and dimple. 
 
-<iframe width = 100% height = 60%  src='n2.html'></iframe>
+<iframe width = "800" height = "1000"  src='n2.html'></iframe>
 
 
 
@@ -394,7 +392,7 @@ d1$addControls("groups", value = "", values = names(data))
 d1$save('d1.html', cdn = TRUE)
 ```
 
-<iframe width = 100% height = 60%  src='d1.html'></iframe>
+<iframe width = "800" height = "600"  src='d1.html'></iframe>
 
 
 

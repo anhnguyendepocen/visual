@@ -187,9 +187,9 @@ hljs.initHighlightingOnLoad();
 
 <h2>install &amp; test</h2>
 
-<p>#install.packages(&ldquo;devtools&rdquo;)
-#require(devtools)
-#install_github(&#39;rCharts&#39;, &#39;ramnathv&#39;)</p>
+<p>install.packages(&ldquo;devtools&rdquo;)
+require(devtools)
+install_github(&#39;rCharts&#39;, &#39;ramnathv&#39;)</p>
 
 <pre><code class="r">require(rCharts)
 </code></pre>
@@ -224,99 +224,33 @@ names(iris)
 </code></pre>
 
 <pre><code class="r">require(rCharts)
-require(knitr)
-opts_chunk$set(comment = NA, results = &quot;test&quot;, comment = NA, tidy = F)
 r1 &lt;- rPlot(SepalLength ~ SepalWidth | Species, data = iris, color = &#39;Species&#39;, type = &#39;point&#39;)
 r1$save(&#39;test.html&#39;, cdn = TRUE)
-r1$show(&#39;iframesrc&#39;, cdn = TRUE)
+
+# &lt;iframe width = &quot;800&quot; height = &quot;600&quot; src=&#39;r1.html&#39;&gt;&lt;/iframe&gt;
 </code></pre>
 
-<pre><code>## &lt;iframe srcdoc=&#39; &amp;lt;!doctype HTML&amp;gt;
-## &amp;lt;meta charset = &amp;#039;utf-8&amp;#039;&amp;gt;
-## &amp;lt;html&amp;gt;
-##   &amp;lt;head&amp;gt;
-##     
-##     &amp;lt;script src=&amp;#039;//ramnathv.github.io/rCharts/libraries/widgets/polycharts/js/polychart2.standalone.js&amp;#039; type=&amp;#039;text/javascript&amp;#039;&amp;gt;&amp;lt;/script&amp;gt;
-##     
-##     &amp;lt;style&amp;gt;
-##     .rChart {
-##       display: block;
-##       margin-left: auto; 
-##       margin-right: auto;
-##       width: 800px;
-##       height: 400px;
-##     }  
-##     &amp;lt;/style&amp;gt;
-##     
-##   &amp;lt;/head&amp;gt;
-##   &amp;lt;body &amp;gt;
-##     
-##     &amp;lt;div id = &amp;#039;chart32455af2b49d&amp;#039; class = &amp;#039;rChart polycharts&amp;#039;&amp;gt;&amp;lt;/div&amp;gt;    
-##     &amp;lt;script type=&amp;#039;text/javascript&amp;#039;&amp;gt;
-##     var chartParams = {
-##  &amp;quot;dom&amp;quot;: &amp;quot;chart32455af2b49d&amp;quot;,
-## &amp;quot;width&amp;quot;:    800,
-## &amp;quot;height&amp;quot;:    400,
-## &amp;quot;layers&amp;quot;: [
-##  {
-##  &amp;quot;x&amp;quot;: &amp;quot;SepalWidth&amp;quot;,
-## &amp;quot;y&amp;quot;: &amp;quot;SepalLength&amp;quot;,
-## &amp;quot;data&amp;quot;: {
-##  &amp;quot;SepalLength&amp;quot;: [    5.1,    4.9,    4.7,    4.6,      5,    5.4,    4.6,      5,    4.4,    4.9,    5.4,    4.8,    4.8,    4.3,    5.8,    5.7,    5.4,    5.1,    5.7,    5.1,    5.4,    5.1,    4.6,    5.1,    4.8,      5,      5,    5.2,    5.2,    4.7,    4.8,    5.4,    5.2,    5.5,    4.9,      5,    5.5,    4.9,    4.4,    5.1,      5,    4.5,    4.4,      5,    5.1,    4.8,    5.1,    4.6,    5.3,      5,      7,    6.4,    6.9,    5.5,    6.5,    5.7,    6.3,    4.9,    6.6,    5.2,      5,    5.9,      6,    6.1,    5.6,    6.7,    5.6,    5.8,    6.2,    5.6,    5.9,    6.1,    6.3,    6.1,    6.4,    6.6,    6.8,    6.7,      6,    5.7,    5.5,    5.5,    5.8,      6,    5.4,      6,    6.7,    6.3,    5.6,    5.5,    5.5,    6.1,    5.8,      5,    5.6,    5.7,    5.7,    6.2,    5.1,    5.7,    6.3,    5.8,    7.1,    6.3,    6.5,    7.6,    4.9,    7.3,    6.7,    7.2,    6.5,    6.4,    6.8,    5.7,    5.8,    6.4,    6.5,    7.7,    7.7,      6,    6.9,    5.6,    7.7,    6.3,    6.7,    7.2,    6.2,    6.1,    6.4,    7.2,    7.4,    7.9,    6.4,    6.3,    6.1,    7.7,    6.3,    6.4,      6,    6.9,    6.7,    6.9,    5.8,    6.8,    6.7,    6.7,    6.3,    6.5,    6.2,    5.9 ],
-## &amp;quot;SepalWidth&amp;quot;: [    3.5,      3,    3.2,    3.1,    3.6,    3.9,    3.4,    3.4,    2.9,    3.1,    3.7,    3.4,      3,      3,      4,    4.4,    3.9,    3.5,    3.8,    3.8,    3.4,    3.7,    3.6,    3.3,    3.4,      3,    3.4,    3.5,    3.4,    3.2,    3.1,    3.4,    4.1,    4.2,    3.1,    3.2,    3.5,    3.6,      3,    3.4,    3.5,    2.3,    3.2,    3.5,    3.8,      3,    3.8,    3.2,    3.7,    3.3,    3.2,    3.2,    3.1,    2.3,    2.8,    2.8,    3.3,    2.4,    2.9,    2.7,      2,      3,    2.2,    2.9,    2.9,    3.1,      3,    2.7,    2.2,    2.5,    3.2,    2.8,    2.5,    2.8,    2.9,      3,    2.8,      3,    2.9,    2.6,    2.4,    2.4,    2.7,    2.7,      3,    3.4,    3.1,    2.3,      3,    2.5,    2.6,      3,    2.6,    2.3,    2.7,      3,    2.9,    2.9,    2.5,    2.8,    3.3,    2.7,      3,    2.9,      3,      3,    2.5,    2.9,    2.5,    3.6,    3.2,    2.7,      3,    2.5,    2.8,    3.2,      3,    3.8,    2.6,    2.2,    3.2,    2.8,    2.8,    2.7,    3.3,    3.2,    2.8,      3,    2.8,      3,    2.8,    3.8,    2.8,    2.8,    2.6,      3,    3.4,    3.1,      3,    3.1,    3.1,    3.1,    2.7,    3.2,    3.3,      3,    2.5,      3,    3.4,      3 ],
-## &amp;quot;PetalLength&amp;quot;: [    1.4,    1.4,    1.3,    1.5,    1.4,    1.7,    1.4,    1.5,    1.4,    1.5,    1.5,    1.6,    1.4,    1.1,    1.2,    1.5,    1.3,    1.4,    1.7,    1.5,    1.7,    1.5,      1,    1.7,    1.9,    1.6,    1.6,    1.5,    1.4,    1.6,    1.6,    1.5,    1.5,    1.4,    1.5,    1.2,    1.3,    1.4,    1.3,    1.5,    1.3,    1.3,    1.3,    1.6,    1.9,    1.4,    1.6,    1.4,    1.5,    1.4,    4.7,    4.5,    4.9,      4,    4.6,    4.5,    4.7,    3.3,    4.6,    3.9,    3.5,    4.2,      4,    4.7,    3.6,    4.4,    4.5,    4.1,    4.5,    3.9,    4.8,      4,    4.9,    4.7,    4.3,    4.4,    4.8,      5,    4.5,    3.5,    3.8,    3.7,    3.9,    5.1,    4.5,    4.5,    4.7,    4.4,    4.1,      4,    4.4,    4.6,      4,    3.3,    4.2,    4.2,    4.2,    4.3,      3,    4.1,      6,    5.1,    5.9,    5.6,    5.8,    6.6,    4.5,    6.3,    5.8,    6.1,    5.1,    5.3,    5.5,      5,    5.1,    5.3,    5.5,    6.7,    6.9,      5,    5.7,    4.9,    6.7,    4.9,    5.7,      6,    4.8,    4.9,    5.6,    5.8,    6.1,    6.4,    5.6,    5.1,    5.6,    6.1,    5.6,    5.5,    4.8,    5.4,    5.6,    5.1,    5.1,    5.9,    5.7,    5.2,      5,    5.2,    5.4,    5.1 ],
-## &amp;quot;PetalWidth&amp;quot;: [    0.2,    0.2,    0.2,    0.2,    0.2,    0.4,    0.3,    0.2,    0.2,    0.1,    0.2,    0.2,    0.1,    0.1,    0.2,    0.4,    0.4,    0.3,    0.3,    0.3,    0.2,    0.4,    0.2,    0.5,    0.2,    0.2,    0.4,    0.2,    0.2,    0.2,    0.2,    0.4,    0.1,    0.2,    0.2,    0.2,    0.2,    0.1,    0.2,    0.2,    0.3,    0.3,    0.2,    0.6,    0.4,    0.3,    0.2,    0.2,    0.2,    0.2,    1.4,    1.5,    1.5,    1.3,    1.5,    1.3,    1.6,      1,    1.3,    1.4,      1,    1.5,      1,    1.4,    1.3,    1.4,    1.5,      1,    1.5,    1.1,    1.8,    1.3,    1.5,    1.2,    1.3,    1.4,    1.4,    1.7,    1.5,      1,    1.1,      1,    1.2,    1.6,    1.5,    1.6,    1.5,    1.3,    1.3,    1.3,    1.2,    1.4,    1.2,      1,    1.3,    1.2,    1.3,    1.3,    1.1,    1.3,    2.5,    1.9,    2.1,    1.8,    2.2,    2.1,    1.7,    1.8,    1.8,    2.5,      2,    1.9,    2.1,      2,    2.4,    2.3,    1.8,    2.2,    2.3,    1.5,    2.3,      2,      2,    1.8,    2.1,    1.8,    1.8,    1.8,    2.1,    1.6,    1.9,      2,    2.2,    1.5,    1.4,    2.3,    2.4,    1.8,    1.8,    2.1,    2.4,    2.3,    1.9,    2.3,    2.5,    2.3,    1.9,      2,    2.3,    1.8 ],
-## &amp;quot;Species&amp;quot;: [ &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;setosa&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;versicolor&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot;, &amp;quot;virginica&amp;quot; ] 
-## },
-## &amp;quot;facet&amp;quot;: &amp;quot;Species&amp;quot;,
-## &amp;quot;color&amp;quot;: &amp;quot;Species&amp;quot;,
-## &amp;quot;type&amp;quot;: &amp;quot;point&amp;quot; 
-## } 
-## ],
-## &amp;quot;facet&amp;quot;: {
-##  &amp;quot;type&amp;quot;: &amp;quot;wrap&amp;quot;,
-## &amp;quot;var&amp;quot;: &amp;quot;Species&amp;quot; 
-## },
-## &amp;quot;guides&amp;quot;: [],
-## &amp;quot;coord&amp;quot;: [],
-## &amp;quot;id&amp;quot;: &amp;quot;chart32455af2b49d&amp;quot; 
-## }
-##     _.each(chartParams.layers, function(el){
-##         el.data = polyjs.data(el.data)
-##     })
-##     var graph_chart32455af2b49d = polyjs.chart(chartParams);
-## &amp;lt;/script&amp;gt;
-##     
-##     &amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;    
-##   &amp;lt;/body&amp;gt;
-## &amp;lt;/html&amp;gt; &#39; scrolling=&#39;no&#39; frameBorder=&#39;0&#39; seamless class=&#39;rChart  polycharts  &#39; id=&#39;iframe-chart32455af2b49d&#39;&gt; &lt;/iframe&gt;
-##  &lt;style&gt;iframe.rChart{ width: 100%; height: 400px;}&lt;/style&gt;
-</code></pre>
-
-<pre><code class="r"># &lt;iframe width = &quot;800&quot; height = &quot;600&quot; src=&#39;r1.html&#39;&gt;&lt;/iframe&gt;
-</code></pre>
-
-<iframe width = 100% height = 60% src='test.html'></iframe>
+<iframe width = "800" height = "600" src='test.html'></iframe>
 
 <h2>Polycharts</h2>
 
 <pre><code class="r">head(mtcars)
 </code></pre>
 
-<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
 </code></pre>
 
 <pre><code class="r">r2 &lt;- rPlot(mpg ~ wt, data = mtcars, type = &#39;point&#39;)
 r2$save(&#39;r2.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='r2.html'></iframe>
+<iframe width = "800" height = "600" src='r2.html'></iframe>
 
 <h3>rCharts Polychart: Adding horizontal or vertical lines to a plot</h3>
 
@@ -334,7 +268,7 @@ p1$layer(y=&#39;sdneg&#39;, copy_layer=T, type=&#39;line&#39;, color=list(const=
 p1$save(&#39;p1.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='p1.html'></iframe>
+<iframe width = "800" height = "600" src='p1.html'></iframe>
 
 <h3>다양한 polycharts</h3>
 
@@ -353,7 +287,7 @@ p2$layer(tooltip = &quot;#! function(i) {return &#39;gear &#39; + i.gear + &#39;
 p2$save(&#39;p2.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='p2.html'></iframe>
+<iframe width = "800" height = "600" src='p2.html'></iframe>
 
 <ul>
 <li>line + point</li>
@@ -368,7 +302,7 @@ p3$set(title = &quot;line + point&quot;)
 p3$save(&#39;p3.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='p3.html'></iframe>
+<iframe width = "800" height = "600" src='p3.html'></iframe>
 
 <ul>
 <li>area</li>
@@ -383,7 +317,7 @@ p4$guides(x = list(title = &quot;XXXX&quot;), y = list(title = &quot;YYYY&quot;)
 p4$save(&#39;p4.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='p4.html'></iframe>
+<iframe width = "800" height = "600" src='p4.html'></iframe>
 
 <ul>
 <li>bar</li>
@@ -396,7 +330,7 @@ p5 &lt;- rPlot(Freq ~ Hair | Sex, color = &quot;Eye&quot;, data = hair_eye, type
 p5$save(&#39;p5.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='p5.html'></iframe>
+<iframe width = "800" height = "600" src='p5.html'></iframe>
 
 <ul>
 <li>극좌표</li>
@@ -415,7 +349,7 @@ p6$guides(x = list(position = &quot;none&quot;, padding = 0), y = list(numticks=
 p6$save(&#39;p6.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='p6.html'></iframe>
+<iframe width = "800" height = "600" src='p6.html'></iframe>
 
 <h2>Morris</h2>
 
@@ -426,10 +360,10 @@ m1$set(pointSize = 0, lineWidth = 1)
 m1$save(&#39;m1.html&#39;, cdn = TRUE)
 </code></pre>
 
-<pre><code>Loading required package: reshape2
+<pre><code>## Loading required package: reshape2
 </code></pre>
 
-<iframe width = 100% height = 60% src='m1.html'></iframe>
+<iframe width = "800" height = "600" src='m1.html'></iframe>
 
 <h3>다양한 polycharts</h3>
 
@@ -450,7 +384,7 @@ m2$save(&#39;m2.html&#39;, cdn = TRUE)
 ## Loading required package: reshape2
 </code></pre>
 
-<iframe width = 100% height = 60% src='m2.html'></iframe>
+<iframe width = "800" height = "600" src='m2.html'></iframe>
 
 <ul>
 <li>line 2</li>
@@ -461,7 +395,7 @@ m3 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;), data = 
 m3$save(&#39;m3.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='m3.html'></iframe>
+<iframe width = "800" height = "600" src='m3.html'></iframe>
 
 <ul>
 <li>시계열 영역 차트</li>
@@ -476,7 +410,7 @@ m4$set(events = paste(c(2004, 2008)), eventStrokeWidth = 10)
 m4$save(&#39;m4.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='m4.html'></iframe>
+<iframe width = "800" height = "600" src='m4.html'></iframe>
 
 <ul>
 <li>사용자정의 popup tooltip</li>
@@ -489,7 +423,7 @@ m5$set(hoverCallback = &quot;#! function (index, options, content) {return optio
 m5$save(&#39;m5.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='m5.html'></iframe>
+<iframe width = "800" height = "600" src='m5.html'></iframe>
 
 <ul>
 <li>bar 1</li>
@@ -500,7 +434,7 @@ m6 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;, &quot;y3
 m6$save(&#39;m6.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='m6.html'></iframe>
+<iframe width = "800" height = "600" src='m6.html'></iframe>
 
 <ul>
 <li>bar 2 ; stacked</li>
@@ -513,7 +447,7 @@ m7 &lt;- mPlot(x = &quot;x&quot;, y = c(&quot;y1&quot;, &quot;y2&quot;, &quot;y3
 m7$save(&#39;m7.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60% src='m7.html'></iframe>
+<iframe width = "800" height = "600" src='m7.html'></iframe>
 
 <ul>
 <li>도넛차트</li>
@@ -525,10 +459,10 @@ m8 &lt;- mPlot(x = NULL, y = NULL, data = d, type = &quot;Donut&quot;, formatter
 m8$save(&#39;m8.html&#39;, cdn = TRUE)
 </code></pre>
 
-<pre><code>The following `from` values were not present in `x`: x
+<pre><code>## The following `from` values were not present in `x`: x
 </code></pre>
 
-<iframe width = 100% height = 60% src='m8.html'></iframe>
+<iframe width = "800" height = "600" src='m8.html'></iframe>
 
 <h2>nvd3</h2>
 
@@ -540,7 +474,7 @@ r3$chart(color = c(&#39;brown&#39;, &#39;blue&#39;, &#39;#594c26&#39;, &#39;gree
 r3$save(&#39;r3.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60%  src='r3.html'></iframe>
+<iframe width = "800" height = "600"  src='r3.html'></iframe>
 
 <h2>xCharts</h2>
 
@@ -551,68 +485,68 @@ x1 &lt;- xPlot(value ~ year, group = &quot;category&quot;, data = uspexp, type =
 x1$save(&#39;x1.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60%  src='x1.html'></iframe>
+<iframe width = "800" height = "600"  src='x1.html'></iframe>
 
 <h2>Rickshaw</h2>
 
 <pre><code class="r">head(USPersonalExpenditure)
 </code></pre>
 
-<pre><code>                      1940   1945  1950 1955  1960
-Food and Tobacco    22.200 44.500 59.60 73.2 86.80
-Household Operation 10.500 15.500 29.00 36.5 46.20
-Medical and Health   3.530  5.760  9.71 14.0 21.10
-Personal Care        1.040  1.980  2.45  3.4  5.40
-Private Education    0.341  0.974  1.80  2.6  3.64
+<pre><code>##                       1940   1945  1950 1955  1960
+## Food and Tobacco    22.200 44.500 59.60 73.2 86.80
+## Household Operation 10.500 15.500 29.00 36.5 46.20
+## Medical and Health   3.530  5.760  9.71 14.0 21.10
+## Personal Care        1.040  1.980  2.45  3.4  5.40
+## Private Education    0.341  0.974  1.80  2.6  3.64
 </code></pre>
 
 <pre><code class="r">usp = reshape2::melt(USPersonalExpenditure)
 head(usp)
 </code></pre>
 
-<pre><code>                 Var1 Var2  value
-1    Food and Tobacco 1940 22.200
-2 Household Operation 1940 10.500
-3  Medical and Health 1940  3.530
-4       Personal Care 1940  1.040
-5   Private Education 1940  0.341
-6    Food and Tobacco 1945 44.500
+<pre><code>##                  Var1 Var2  value
+## 1    Food and Tobacco 1940 22.200
+## 2 Household Operation 1940 10.500
+## 3  Medical and Health 1940  3.530
+## 4       Personal Care 1940  1.040
+## 5   Private Education 1940  0.341
+## 6    Food and Tobacco 1945 44.500
 </code></pre>
 
 <pre><code class="r">tail(usp)
 </code></pre>
 
-<pre><code>                  Var1 Var2 value
-20   Private Education 1955  2.60
-21    Food and Tobacco 1960 86.80
-22 Household Operation 1960 46.20
-23  Medical and Health 1960 21.10
-24       Personal Care 1960  5.40
-25   Private Education 1960  3.64
+<pre><code>##                   Var1 Var2 value
+## 20   Private Education 1955  2.60
+## 21    Food and Tobacco 1960 86.80
+## 22 Household Operation 1960 46.20
+## 23  Medical and Health 1960 21.10
+## 24       Personal Care 1960  5.40
+## 25   Private Education 1960  3.64
 </code></pre>
 
 <pre><code class="r">tt &lt;- as.POSIXct(paste0(usp$Var2, &quot;-01-01&quot;))
 tt
 </code></pre>
 
-<pre><code> [1] &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot;
- [5] &quot;1940-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot;
- [9] &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot;
-[13] &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1955-01-01 KST&quot;
-[17] &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot;
-[21] &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot;
-[25] &quot;1960-01-01 KST&quot;
+<pre><code>##  [1] &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot; &quot;1940-01-01 KST&quot;
+##  [5] &quot;1940-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot;
+##  [9] &quot;1945-01-01 KST&quot; &quot;1945-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot;
+## [13] &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1950-01-01 KST&quot; &quot;1955-01-01 KST&quot;
+## [17] &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot; &quot;1955-01-01 KST&quot;
+## [21] &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot; &quot;1960-01-01 KST&quot;
+## [25] &quot;1960-01-01 KST&quot;
 </code></pre>
 
 <pre><code class="r">usp$Var2 &lt;- as.numeric(as.POSIXct(paste0(usp$Var2, &quot;-01-01&quot;)))
 usp$Var2 
 </code></pre>
 
-<pre><code> [1] -946803600 -946803600 -946803600 -946803600 -946803600 -788950800
- [7] -788950800 -788950800 -788950800 -788950800 -631184400 -631184400
-[13] -631184400 -631184400 -631184400 -473414400 -473414400 -473414400
-[19] -473414400 -473414400 -315648000 -315648000 -315648000 -315648000
-[25] -315648000
+<pre><code>##  [1] -946803600 -946803600 -946803600 -946803600 -946803600 -788950800
+##  [7] -788950800 -788950800 -788950800 -788950800 -631184400 -631184400
+## [13] -631184400 -631184400 -631184400 -473414400 -473414400 -473414400
+## [19] -473414400 -473414400 -315648000 -315648000 -315648000 -315648000
+## [25] -315648000
 </code></pre>
 
 <pre><code class="r">pp4 &lt;- Rickshaw$new()
@@ -623,7 +557,7 @@ pp4$set(slider = TRUE)
 pp4$save(&#39;pp4.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60%  src='pp4.html'></iframe>
+<iframe width = "800" height = "600"  src='pp4.html'></iframe>
 
 <h2>Leaflet</h2>
 
@@ -636,7 +570,7 @@ map3$marker(c(37.5414623,127.0722618), bindPopup = &quot;&lt;p&gt; Hi. I&#39;m H
 map3$save(&#39;map3.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60%  src='map3.html'></iframe>
+<iframe width = "800" height = "600"  src='map3.html'></iframe>
 
 <h2>Interactive Controls and rCharts 1</h2>
 
@@ -646,7 +580,7 @@ map3$save(&#39;map3.html&#39;, cdn = TRUE)
 n1$save(&#39;n1.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60%  src='n1.html'></iframe>
+<iframe width = "800" height = "600"  src='n1.html'></iframe>
 
 <pre><code class="r">n1$addControls(&quot;x&quot;, value = &quot;wt&quot;, values = names(mtcars))
 n1$addControls(&quot;y&quot;, value = &quot;wt&quot;, values = names(mtcars))
@@ -660,7 +594,7 @@ n1$save(&#39;n2.html&#39;, cdn = TRUE)
 <li>The addControls method has not been implemented for all libraries. It only works for nvd3, polychart and dimple. </li>
 </ul>
 
-<iframe width = 100% height = 60%  src='n2.html'></iframe>
+<iframe width = "800" height = "1000"  src='n2.html'></iframe>
 
 <h2>Interactive Controls and rCharts 2</h2>
 
@@ -687,7 +621,7 @@ d1$addControls(&quot;groups&quot;, value = &quot;&quot;, values = names(data))
 d1$save(&#39;d1.html&#39;, cdn = TRUE)
 </code></pre>
 
-<iframe width = 100% height = 60%  src='d1.html'></iframe>
+<iframe width = "800" height = "600"  src='d1.html'></iframe>
 
 <h2>Interactive Controls and rCharts 3</h2>
 
