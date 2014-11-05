@@ -1,0 +1,230 @@
+# PNG로 출력
+## R은 BMP,IFF,JPEG같은 다른 비트맴 형식도 지원은 하나, PDF는 출력및 다른OS와의 호환을 위해
+#그리고 해상도가 높은 PNG이외의 이것들을 쓸 이유가 없다.
+### 화면 축소시 해상도가 높은 PNG를 이용하자 ##
+
+```{r}
+#install.packages("Cairo")
+library(Cairo)
+CariroPNG("")
+plot(mtcars$wt,mtcars$mpg)
+```
+
+#명령어를 쓸 필요없이 그래픽 출력창 위에 있는 Export 인터페이스를 사용하자
+
+###그래프를 그리는 것을 전쟁이라고 생각하면, 전투의 절반은 그래프 커맨드를 호출하기도 전에 발생한다 ##
+
+```{r}
+#install.packages("gcookbook")
+library(gcookbook)
+heightweight
+head(heightweight)
+str(heightweight)
+```
+
+#15.1 데이터 프레임 생성하기
+
+```{r}
+g <- c("A","B","C")  #첫 번째 열 (이하 1열)
+x <- 1:3 #두 번째 열
+dat <- data.frame(g,x) ## 순서대로 열 병합
+
+lst <- list(group = g, value = x) # list(첫번째 열이름 , 두번째 열 이름 적용)
+dat <- as.data.frame(lst) # list(첫번째 열이름 변경, 두번쨰 열이름 변경)
+
+lst2 <- list(value = x, gruop = g)
+dat2 <- as.data.frame(lst2)
+```
+
+#15.2 데이터 구조에 대한 정보 얻기
+
+```{r}
+str(ToothGrowth)
+head(ToothGrowth)
+
+
+tg <- ToothGrowth
+tg
+tg$supp <- as.character(tg$supp)
+tg$supp
+```
+
+#15.3 데이터 프레임에 열 추가하기
+
+```{r}
+dat$a <- a
+#행의 수가 다르면 데이터는 추가되지 않는다.
+a <- c("dog","pig","gag")
+dat
+
+#행의 수가 같아야 데이터가 추가된다.
+b <- 5:6
+dat$newcol <- b
+dat
+```
+
+
+#15.4 데이터 프레임에서 열 삭제하기
+```{r}
+#방법1 NULL을 대입해주자
+dat$a <- NULL
+dat
+
+#방법2 sub함수를 이용하자 subset(데이터이름, select= -열변수) "-"를 넣어주면 열데이터가 제외된다.
+dat$a <- a
+dat <- subset(dat, select=-a) ## select에 - 기호를 넣자
+dat
+#subset(dat,select=a)를 할 경우 a열만남기고 모든 열 변수가 없어진다.
+dat <- subset(dat, select=a)
+
+##### 매상 #####
+g <- c("A","B","C")  #첫 번째 열 (이하 1열)
+x <- 1:3 #두 번째 열
+dat <- data.frame(g,x) ## 순서대로 열 병합
+
+lst <- list(group = g, value = x) # list(첫번째 열이름 , 두번째 열 이름 적용)
+dat <- as.data.frame(lst) # list(첫번째 열이름 변경, 두번쨰 열이름 변경)
+################
+```
+
+#15.5 데이터 프레임의 열 이름 변경하기
+
+```{r}
+##데이터 프레임에 있는 열들의 이름을 바꾸고 싶다.
+names(dat)
+
+#dat의 열이름을 넣어주자
+names(dat) <- c("dog","cat")
+dat
+anthoming
+
+#방법 1
+names(dat) #enthmoing 데이터의 anthoming 중 ctrl 변수명을 control로 변환
+names(dat)[names(dat) == "dog"] <- c("멍멍이") 
+names(dat)[names(dat) == "cat"] <- c("야옹이") 
+dat
+#####질문 ####### 
+###[names(anthoming)] == "ctrl"은 이해하겠는데, 그 앞에 또 names(dat)을 붙혀주는 이유는 무엇일까?#
+
+#방법 2
+#열의 위치를 숫자로 선택해서 이름을 바꿀 수도 있다.
+names(dat)[1] <- "!!!댕댕이!!!" #names(데이터)[바꾸고자 하는 열의 순서] <- "변경 후 이름"
+names(dat)
+```
+
+#15.7 데이터 프레임의 부분 집합 취하기
+
+##subset함수를 사용한다. 이련의 조건을 만족하는 행들을 추출하거나, 특정 열을 선택하는 데 쓸 수 있다.
+```{r}
+library(gcookbook) #climate 데이터를 불러오려면 본 라이브러리를 풀자.
+climate
+head(climate)
+str(climate)
+summary(climate)
+
+#방법1 #subset 명령어로
+head(subset(climate,Source =="Berkeley" & climate$Year > 1900 & climate$Year<=2000, select=c(Year,Anomaly10y))) # select는 해당 열만 표시해준다.
+head(subset(climate,Source =="Berkeley" & climate$Year > 1900 & climate$Year<=2000, ))
+
+#방법2 #명령어 없이
+head(climate[climate$Source=="Berkeley" & climate$Year >= 1900  & climate$Year <= 2000, c("Year","Anomaly10y")])
+head(climate[climate$Source=="Berkeley" & climate$Year >= 1900  & climate$Year <= 2000, ])
+
+climate[1:10,c(2,5)]
+names(climate[2])
+names(climate[5])
+dat
+```
+
+#15.8 요인수준의 순서 변경하기 
+#R에는 두 종류의 요인이 있다. 바로 순서가 있는 요인과 일반 요인(임의로 된 순서)이다.
+#요인수준의 순서는 그래픽 출력에 영향을 미친다. ggplot2에서 에스테틱 속성에 대입하면,
+#이 에스테틱은 해당 요인의 수준들 순서를 차용한다. 
+#만약 어떤 요인을 x축에 대입했다면 축 위의 눈금 표시들은 요인 수준들의 순서에 맞게 나타나며,
+#색상에 대입하면 법례에 있는 항목들의 순서가 해당 요인의 수준 순서를 가져다 쓰게 된다.
+## 요인에 들어있는 수준들의 순서를 바꾸고 싶다.
+
+### 수준의 순서는 요인을 factor()에 전달하고, level을 지정해주면 깔끔하게 바꿀 수 있다.
+
+```{r}
+#level을 지정해주지 않으면 임의로 정렬해준다.
+line <- factor(c("one","two","three","four"))
+line
+#level을 지정해주면 특정 기준으로 정렬해준다.
+line <- factor(line, levels = c("one","two","three","four"))
+line
+```
+
+# 15.9 데이터 값을 기준으로 요인 수준의 순서 변경하기
+```{r}
+head(InsectSprays) #살충제 데이터
+iss <- InsectSprays
+iss$spray
+```
+
+## 원본의 수준은 ABCDEF였으나, 순서가 변경되어 CEDABF로 변경됨
+#이것은 iss$spray의 값에 따라 조갠 다음, 각 집단의 평균을 내어 새로운 순서로 결정한 것
+
+#15.10 요인수준의 이름 변경하기
+
+#방법 1#기본으로 내장된 함수를 이용시##
+```{r}
+pizza <- factor(c("small","large","large","small","medium"))
+levels(pizza)[levels(pizza)=="large"] <- "L"
+levels(pizza)[levels(pizza)=="medium"] <- "M"
+levels(pizza)[levels(pizza)=="small"] <- "S"
+pizza
+```
+
+#방법 2#pylr패키지 ; plyr: the split-apply-combine paradigm for R 
+```{r}
+#install.packages("plyr")
+library(plyr)
+pizza <- factor(c("small","large","large","small","medium"))
+pizza
+levels(pizza)
+
+#revalue 명렁어를 이용한다. revalue(데이터,c(기존 레벨 = "변경된 수준"))
+hungry <- revalue(pizza,c(small="S",medium="M",large="L"))
+hungry
+
+##비교
+
+levels(pizza)[levels(pizza)=="large"] <- "L"
+levels(pizza)[levels(pizza)=="medium"] <- "M"
+levels(pizza)[levels(pizza)=="small"] <- "S"
+# VS
+hungry <- revalue(pizza,c(small="S",medium="M",large="L"))
+
+### 하지만 이러한 방법을 쓸 때는 모든 요인의 수준들이 리스트에 명시되어 있어야 하며
+# 하나라도 없을시 NA로 자동 대체된다는 점을 명심하자
+```
+
+#15.14 연속 변수를 범주형 변수로 코딩하기 (양적 변수 -> 질적변수)
+```{r}
+PlantGrowth
+pg <- PlantGrowth
+head(pg) #weight 값이 양적 변수임을 확인해보자
+
+## cut함수를 이용하여, 연속변수인 weight을 wtclass라는 범주형 변수로 바꾸어 코딩하자
+# cut(데이터$열, break = c(계급1의 최소값, 계급2의 최소 값, - - - , 계급의 최대값))
+pg$wtclass <- cut(pg$weight,breaks=c(0,5,6, Inf)) #Inf에서 I 대문자 소문자 조심하자 ㅠ_ㅠ
+pg$wtclass
+pg
+##만약 계급에 속하지 않은 다른 값들이 생길 경우, NA값으로 처리됨을 잊지말자.
+###나아가 cut(데이터$열, break = c(계급1의 최소값, 계급2의 최소 값, - - - , 계급의 최대값,labels=c("light","normal","heavy")))
+pg$wtclass <- cut(pg$weight,breaks=c(0,5,6, Inf),labels = c("light","normal","heavey"))
+pg
+```
+
+
+3.움직이는 도표
+
+```{r}
+#install.packages("googleVis")
+library(googleVis)
+line <- read.csv("b.csv",header=T,sep=",")
+line
+t1 <- gvisMotionChart(line,idvar="line_no",timevar="time",option=list(width=1000,height=500))
+plot(t1) # md 파일에서는 결과물을 못보지만, R을 실제 구동하면 활성화됨.
+```
