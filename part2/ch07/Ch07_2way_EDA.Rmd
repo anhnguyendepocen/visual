@@ -1,0 +1,104 @@
+---
+title: "Ch07_2way analysis"
+output: html_document
+---
+## 발표일자 : 2014.11.21 
+## 발표자 : 최창순
+
+
+### 1. 2원자료 탐색 (부제: 다시 대학교를 다녀야할까?)
+```{r}
+## Load file
+#setwd("C:/EDA_Heo/")
+temp <- read.table("WorldTemperature_Mean.txt", header = T)
+head(temp)
+str(temp)
+
+## Median polish
+twoway_temp <- medpolish(temp)
+twoway_temp
+
+attach(twoway_temp)
+comparison <- matrix(row, ncol = 1) %*% matrix(col, nrow = 1)/overall
+```
+
+
+```{r}
+plot(residuals ~ comparison, xlim = c(-15, 15), ylim = c(-15, 15))
+boxplot(residuals, ylab = "residuals")
+```
+
+```{r}
+round(residuals[order(row), ],1)
+```
+
+###2. 3차원 자료를 이용한 2원분석(부제: 느낌만 가지고 가자)
+```{r}
+data(UCBAdmissions)
+UCBAdmissions
+str(UCBAdmissions)
+Tab1 <- UCBAdmissions[1,,]
+Tab2 <- UCBAdmissions[2,,]
+Tab1 ### 입학 허가 된 사람들
+Tab2 ### 입학 거절 된 사람들
+Tab <- Tab1 + Tab2
+Tab
+addmargins(Tab) ### 각 행과 열의 합을 구해줌
+```
+
+```{r}
+barplot(Tab, legend = rownames(Tab))
+```
+
+```{r}
+Tab_col <- apply(Tab, 2, sum)
+Tab_C <- Tab %*% diag(1/Tab_col) * 100
+colnames(Tab_C) <- c("A", "B", "C", "D", "E", "F")
+rownames(Tab_C) <- c("Male", "Female")
+
+Tab_row <- apply(Tab, 1, sum)
+Tab_R <- diag(1/Tab_row) %*% Tab * 100
+colnames(Tab_R) <- c("A", "B", "C", "D", "E", "F")
+rownames(Tab_R) <- c("Male", "Female")
+```
+
+```{r}
+barplot(Tab_C, legend = rownames(Tab_C))
+barplot(t(Tab), beside= T, legend=colnames(Tab))
+barplot(t(Tab_R), beside = T, legend = colnames(Tab_R))
+```
+
+
+
+```{r}
+Tab_M <- UCBAdmissions[,1,]
+Tab_F <- UCBAdmissions[,2,]
+addmargins(Tab_M)
+addmargins(Tab_F)
+
+Tab_M_col <- apply(Tab_M, 2, sum)
+Tab_M_C <- Tab_M %*% diag(1/Tab_M_col) * 100
+colnames(Tab_M_C) <- c("A", "B", "C", "D", "E", "F")
+Tab_F_col <- apply(Tab_F, 2, sum)
+Tab_F_C <- Tab_F %*% diag(1/Tab_F_col) * 100
+colnames(Tab_F_C) <- c("A", "B", "C", "D", "E", "F")
+```
+
+```{r}
+barplot(Tab_M_C, legend = rownames(Tab_M_C), main = "Male")
+barplot(Tab_F_C, legend = rownames(Tab_F_C), main = "Female")
+```
+
+```{r}
+mosaicplot(~Dept + Gender, data = UCBAdmissions, color = T)
+
+Tab_M <- as.table(Tab_M)
+Tab_F <- as.table(Tab_F)
+
+mosaicplot(~Dept + Admit, data = Tab_M, color = T, main = "Male")
+mosaicplot(~Dept + Admit, data = Tab_F, color = T, main = "Female")
+
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
