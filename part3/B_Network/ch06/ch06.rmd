@@ -1,0 +1,312 @@
+Ch 6. Statistical Models for Network Graphs
+========================================================
+
+# 6.1 Introduction
+- Exponential random graph models : standard regression models (particularly, generalized linear model(GLM))
+- Stochastic block model : a mixture of classical random graph
+- Latent network model : both observed and unobserved(i.e., latent) variables in modeling an outcome
+
+# 6.2 Exponential Random Grpah Models
+
+## 6.2.1 General Formulaztion
+
+```{r}
+# "lazega"" data set : collaboration among laywers (Chap 1.)
+
+# 6.1
+library(sand)    # data set
+data(lazega)
+lazega
+
+#Since ergm uses the network package to represent network objects, we convert the igraph object lazega to the format used in statnet, first separating the network into adjacency matrix and attributes
+
+A <- get.adjacency(lazega)   # convert a graph to adjacency matrix
+A
+v.attrs <- get.data.frame(lazega, what="vertices") # what="vertices" : attain vertices info
+v.attrs
+
+#.6.2
+library(ergm)
+lazega.s <- network::as.network(as.matrix(A), directed = FALSE)
+network::set.vertex.attribute(lazega.s, "Office", v.attrs$Office)
+network::set.vertex.attribute(lazega.s, "Practice", v.attrs$Practice)
+network::set.vertex.attribute(lazega.s, "Gender", v.attrs$Gender)
+network::set.vertex.attribute(lazega.s, "Seniority", v.attrs$Seniority)
+```
+
+## 6.2.2 Specifying a Model
+
+
+```{r fig.width=7, fig.height=6}
+# 6.3
+my.ergm.bern <-formula(lazega.s ~ edges)
+my.ergm.bern
+
+# 6.4
+summary.statistics(my.ergm.bern)
+
+#6.5
+my.ergm <- formula(lazega.s ~ edges + kstar(2) + kstar(3) + triangle)
+summary.statistics(my.ergm)
+
+#6.6
+my.ergm <- formula(lazega.s ~ edges + gwesp(1, fixed = TRUE))
+summary.statistics(my.ergm)
+
+#6.7
+lazega.ergm <- formula(lazega.s ~ edges + gwesp(log(3), fixed = TRUE)
+ + nodemain("Seniority")
+ + nodemain ("Practice")
+ + match ("Practice")
+ + match ("Gender")
+ + match ("Office"))
+
+```
+
+## 6.2.3 Model Fitting
+
+```{r fig.width=7, fig.height=6}
+
+# In ergm, models are fit using the function ergm
+
+# 6.8
+set.seed(42)
+lazega.ergm.fit <- ergm(lazega.ergm)
+
+# The analogy between ERGMs and GLMs may be drawn upon in summarizing and assessing the fit of the former.
+# For example, examination of an analysis of variance (ANOVA) table indicates that there is strong evidence that the variables used in the model lazega.ergm explain the variation in network connectivity to a highly nontrivial extent, with a change in deviance of 459 with only seven variables.
+
+#6.9
+anova.ergm(lazega.ergm.fit)
+
+#Similarly, we can examine the relative contribution of the individual variables in our model.
+#6.10
+summary.ergm(lazega.ergm.fit)
+
+```
+
+## 6.2.4 Goodness-of-fit
+
+```{r fig.width=7, fig.height=6}
+
+# To assess the goodness-of-fit of our model in (6.13), as fit by ergm, the function "gof"" in ergm runs the necessary Monte Carlo simulation and calculates comparisons with the original network graph in terms of the distribution of degree, geodesic length, and edge-wise shared partners (i.e., the number of neighbors shared by a pair of vertices defining an edge).
+
+#6.11
+gof.lazega.ergm <- gof(lazega.ergm.fit)
+
+#6.12
+par(mfrow=c(1,3))
+plot(gof.lazega.ergm)
+
+```
+
+# 6.3 Network Block Models
+## 6.3.1 Model Specification
+- stochastic block model(SBM)
+
+## 6.3.2 Model Fitting
+
+```{r fig.width=7, fig.height=6}
+# The R package mixer implements a number of methods that approximate or alter the original maximum likelihood problem have been proposed in the literature.
+
+# To illustrate, we use the network "fblog of French political blogs"" introduced in Chap. 3.5. Recall that each blog is annotated as being associated with one of nine French political parties. Of course, these annotations do not necessarily correspond to an actual ‘true’ set of class groupings for these blogs, in the sense intended by the relatively simple form of the stochastic block model
+
+#6.13
+library(mixer)
+setSeed(42)
+fblog.sbm <- mixer(as.matrix(get.adjacency(fblog)), qmin=2, qmax=15)
+
+# Note that we have specified only that the total number of classes Q be between 2 and 15. The so-called integration classification likelihood (ICL) criterion is used by mixer to select the number of classes fit to the network.
+
+# Examining the model output
+#6.14
+fblog.sbm.output <- getModel(fblog.sbm)
+names(fblog.sbm.output)
+
+# we see that the network of French blogs has been fit with
+# 6.15
+fblog.sbm.output$q
+
+# classes, in estimated proportions
+#6.16
+fblog.sbm.output$alphas
+# The output from a fitted stochastic block model also allows for the assignment of vertices to classes. Thus stochastic block models may be used as a modelbased method of graph partitioning, complementing the other methods introduced in Chap. 4.4.
+
+
+# For example, examining the estimates for the first three vertices in the French blog network
+# 6.17
+fblog.sbm.output$Taus[, 1:3]
+# we see that an assignment rule based on the maximum a posteriori criterion would place the first and third vertices in class 1, and the second, in class 3. 
+
+#Interestingly, the posterior probability vectors for these three vertices concentrate their weight quite strongly on the most probable class.
+#6.18
+my.ent <- function(x)  { -sum(x*log(x,2))}
+apply(fblog.sbm.output$Taus[, 1:3], 2, my.ent)
+# which are quite small compared to the value
+
+# 6.19
+log(fblog.sbm.output$q, 2)
+# corresponding to the extreme case of a uniform distribution across the 12 classes.
+
+# The same observation seems to hold for the vast majority of the vertices
+
+# 6.20
+summary(apply(fblog.sbm.output$Taus, 2, my.ent))
+
+```
+
+## 6.3.3 Goodness-of-fit
+
+```{r fig.width=7, fig.height=6}
+# A selection of summaries produced by the mixer package are displayed in
+
+#6.21
+plot(fblog.sbm, classes = as.factor(V(fblog)$PolParty))
+
+# "the integrated conditional likelihood (ICL) criteria"" seems to suggest there is some latitude in this choice, with anywhere from 8 to 12 classes being reasonable.
+
+# Examination of the adjacency matrix y, with rows and columns reorganized by the assigned vertex classes, indicates that there are seven larger classes, and five smaller classes.
+
+```
+
+# 6.4 Latent Network Models
+
+- These models contain variables that are unobserved but
+which play a role in determining the probability that vertex pairs are incident to
+each other.
+
+## 6.4.1 General Formulatioon
+
+- ppt file
+
+## 6.4.2 Specifying the Latent Effects
+
+- ppt file
+
+## 6.4.3 Modeling Fitting
+
+```{r fig.width=7, fig.height=6}
+# The package eigenmodel
+
+# The function eigenmodel mcmc in eigenmodel uses Monte Carlo Markov Chain (MCMC) techniques to simulate from the relevant posterior distributions
+
+
+#6.22
+summary(lazega)
+
+# We might hypothesize that collaboration in this setting is driven by similarity of practice, a form of homophily.
+
+# On the other hand, we could similarly hypothesize that collaboration is instead driven by shared office location for distance.
+
+# Because the eigenmodel formulation of latent network models is able to capture aspects of both distance and homophily
+
+# we obtain for three different eigenmodels, specifying (i) no pair-specific covariates, (ii) a covariate for common practice, and (iii) a covariate for shared office location, respectively.
+
+# To fit the model with no pair-specific covariates and a latent eigen-space of Q=2 dimensions is accomplished as follows.
+
+#6.23
+library(eigenmodel)
+set.seed(42)
+A <- get.adjacency(lazega, sparse = FALSE)
+lazega.leig.fit1 <- eigenmodel_mcmc(A, R=2, S=11000, burn = 1000)
+
+# In order to include the effects of common practice, we create an array with that information
+
+#6.24
+same.prac.op <- v.attr.lazega$Office %o% v.attr.lazega$Office #%o% o is alphabet
+same.prac <- matrix(as.numeric(same.prac.op %in% c(1,4,9)), 36, 36)
+same.prac <- array(same.prac, dim=c(36,36,1))
+
+# and fit the model with this additional argument
+
+#6.25
+lazega.leig.fit2 <- eigenmodel_mcmc(A, same.prac, R=2, S=11000, burn=10000)
+
+# Finally, we do similarly for the model that includes information on shared office locations.
+
+#6.26
+same.off.op <- v.attr.lazega$Office %o% v.attr.lazega$Office
+same.off <- matrix(as.numeric(same.off.op %in% c(1,4,9)), 36, 36)
+same.off <- array(same.off, dim=c(36, 36, 1))
+lazega.leig.fit3 <- eigenmodel_mcmc(A, same.off, R=2, S=11000, burn = 10000)
+
+# In order to compare the representation of the network lazega in each of the underlying two-dimensional latent spaces inferred for these models, we extract the eigenvectors for each fitted model
+
+#6.27
+lat.sp.1 <- eigen(lazega.leig.fit1$ULU_postmean)$vec[, 1:2]
+lat.sp.2 <- eigen(lazega.leig.fit2$ULU_postmean)$vec[, 1:2]
+lat.sp.3 <- eigen(lazega.leig.fit3$ULU_postmean)$vec[, 1:2]
+
+# and plot the network in igraph using these coordinates as the layout.
+
+#6.28
+colbar <- c("red", "dodgerblue", "goldenrod")
+v.colors <- colbar[V(lazega)$Office]
+v.shapes <- c("circle", "square") [V(lazega)$Practice]
+v.size <- 3.5*sqrt(V(lazega)$Years)
+v.label <- V(lazega)$Seniority
+plot(lazega, layout=lat.sp.1, vertex.color=v.colors, vertex.shape = v.shapes, vertex.size = v.size,
+     vertex.label=v.label)
+
+# generates the visualization corresponding to the fit without any pair-specific covariates, and those for the other two models are obtained similarly (Fig. 6.3).
+
+# Examination of these three visualizations indicates that while the first two are somewhat similar, the third is distinct.
+
+#6.29
+apply(lazega.leig.fit1$L_postsamp, 2, mean)
+apply(lazega.leig.fit2$L_postsamp, 2, mean)
+apply(lazega.leig.fit3$L_postsamp, 2, mean)
+```
+
+## 6.4.4 Goodness-of-fit
+
+```{r fig.width=7, fig.height=6}
+
+#6.30
+perm.index <- sample(1:630)
+nfolds <- 5
+nmiss <- 630/nfolds
+Avec <- A[lower.tri(A)]
+Avec.pred1 <- numeric(length(Avec))
+
+# the process of cross-validation is implemented in the following lines.
+
+#6.31
+for(i in seq(1, nfolds))   {
+  #index of missing values.
+  miss.index <- seq(((i-1) * nmiss +1), (i * nmiss), 1)
+  A.miss.index <- perm.index[miss.index]
+  
+  #Fill a new Atemp appropriately with NA's.
+  Avec.temp <- Avec
+  Avec.temp [A.miss.index] <- rep("NA", length(A.miss.index))
+  Avec.temp <- as.numeric(Avec.temp)
+  Atemp <- matrix(0, 36, 36)
+  Atemp[lower.tri(Atemp)] <- Avec.temp
+  Atemp <- Atemp + t(Atemp)
+  
+  #Now fit model and predict.
+  Y <- Atemp
+  
+  model1.fit <- eigenmodel_mcmc(Y, R=2, S=11000, burn =10000)
+  model1.pred <- model1.fit$Y_postmean
+  model1.pred.vec <- model1.pred[lower.tri(model1.pred)]
+  Avec.pred1[A.miss.index] <- model1.pred.vec[A.miss.index]
+}
+
+# For example, using the package ROCR, an ROC curve for the predictions based on our first model are generated as follows.
+
+#6.32
+library(ROCR)
+pred1 <- prediction(Avec.pred1, Avec)
+perf1 <- performance(pred1, "tpr", "fpr")
+plot(perf1, col="blue", lwd=3)
+
+# The ROC curves for each of our three latent network models for the Lazega lawyer network are shown in Fig. 6.4. We see that from the perspective of predicting edge status, all three models appear to be comparable in their performance and to perform reasonably well, with an area under the curve (AUC) of roughly 80%.
+
+
+# 6.33
+perf1.auc <- performance(pred1, "auc")
+slot(perf1.auc, "y.values")
+```
+

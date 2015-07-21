@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Ch 6. Statistical Models for Network Graphs</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Ch 6. Statistical Models for Network Graphs</h1>
+
+<h1>6.1 Introduction</h1>
+
+<ul>
+<li>Exponential random graph models : standard regression models (particularly, generalized linear model(GLM))</li>
+<li>Stochastic block model : a mixture of classical random graph</li>
+<li>Latent network model : both observed and unobserved(i.e., latent) variables in modeling an outcome</li>
+</ul>
+
+<h1>6.2 Exponential Random Grpah Models</h1>
+
+<h2>6.2.1 General Formulaztion</h2>
+
+<pre><code class="r"># &quot;lazega&quot;&quot; data set : collaboration among laywers (Chap 1.)
+
+# 6.1
+library(sand)    # data set
+</code></pre>
+
+<pre><code>## Loading required package: igraph
+## Loading required package: igraphdata
+## 
+## Statistical Analysis of Network Data with R
+## Type in C2 (+ENTER) to start with Chapter 2.
+</code></pre>
+
+<pre><code class="r">data(lazega)
+lazega
+</code></pre>
+
+<pre><code>## IGRAPH UN-- 36 115 -- 
+## + attr: name (v/c), Seniority (v/n), Status (v/n), Gender (v/n),
+##   Office (v/n), Years (v/n), Age (v/n), Practice (v/n), School
+##   (v/n)
+</code></pre>
+
+<pre><code class="r">#Since ergm uses the network package to represent network objects, we convert the igraph object lazega to the format used in statnet, first separating the network into adjacency matrix and attributes
+
+A &lt;- get.adjacency(lazega)   # convert a graph to adjacency matrix
+A
+</code></pre>
+
+<pre><code>## 36 x 36 sparse Matrix of class &quot;dgCMatrix&quot;
+</code></pre>
+
+<pre><code>##    [[ suppressing 36 column names &#39;V1&#39;, &#39;V2&#39;, &#39;V3&#39; ... ]]
+</code></pre>
+
+<pre><code>##                                                                          
+## V1  . . . . . . . . . . . . . . . . 1 . . . . . . . . . . . . . . . . . .
+## V2  . . . . . . 1 . . . . . . . . 1 1 . . . . 1 . . . 1 . . 1 . . . . . .
+## V3  . . . . . . . . . . . . . . . . . 1 . . . . . . 1 . . 1 . . . . . . .
+## V4  . . . . . . . . . . . 1 . . . . 1 . 1 1 . 1 . . . 1 . 1 1 . 1 . . . .
+## V5  . . . . . . . . . . . . . . . . . 1 . . . . . 1 . . . 1 . . 1 1 1 . .
+## V6  . . . . . . . . . . . . . . . . . . . . . . . 1 . . . 1 . 1 1 1 . . .
+## V7  . 1 . . . . . . . . . . . . . . . 1 . . . . . . . . . . . . . . . . .
+## V8  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+## V9  . . . . . . . . . . . 1 . . . 1 . . . . . . . . . . . . 1 . . . . . .
+## V10 . . . . . . . . . . . . . . . . . . . . . . . 1 . 1 . . 1 . 1 . . 1 .
+## V11 . . . . . . . . . . . . . . . . 1 . . . . . . . . . . . . . . . . . .
+## V12 . . . 1 . . . . 1 . . . . . 1 1 1 . 1 . . . . . . 1 . . 1 . . . . 1 .
+## V13 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 . 1 . .
+## V14 . . . . . . . . . . . . . . . 1 1 . . . . . . . 1 . . 1 . 1 . 1 . . .
+## V15 . . . . . . . . . . . 1 . . . 1 . . 1 1 . 1 . 1 . 1 . . 1 . . 1 . . 1
+## V16 . 1 . . . . . . 1 . . 1 . 1 1 . 1 . . . . 1 . . . 1 1 . 1 . . 1 . 1 .
+## V17 1 1 . 1 . . . . . . 1 1 . 1 . 1 . . 1 . . 1 . 1 1 1 . 1 1 . . . . 1 .
+## V18 . . 1 . 1 . 1 . . . . . . . . . . . . . . . . . . . . 1 . . 1 1 1 . 1
+## V19 . . . 1 . . . . . . . 1 . . 1 . 1 . . . . 1 . 1 . 1 . 1 . . . . . 1 1
+## V20 . . . 1 . . . . . . . . . . 1 . . . . . . 1 . . . 1 . . . . . . . . .
+## V21 . . . . . . . . . . . . . . . . . . . . . . . . . . 1 . . . . . . . .
+## V22 . 1 . 1 . . . . . . . . . . 1 1 1 . 1 1 . . . . . . . . . . 1 1 . . .
+## V23 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+## V24 . . . . 1 1 . . . 1 . . . . 1 . 1 . 1 . . . . . . 1 . . . . 1 . . . .
+## V25 . . 1 . . . . . . . . . . 1 . . 1 . . . . . . . . . . 1 . . . . . . 1
+## V26 . 1 . 1 . . . . . 1 . 1 . . 1 1 1 . 1 1 . . . 1 . . 1 . . . . 1 . . .
+## V27 . . . . . . . . . . . . . . . 1 . . . . 1 . . . . 1 . . . . . . . . .
+## V28 . . 1 1 1 1 . . . . . . . 1 . . 1 1 1 . . . . . 1 . . . . 1 1 1 . . 1
+## V29 . 1 . 1 . . . . 1 1 . 1 . . 1 1 1 . . . . . . . . . . . . . . . . 1 .
+## V30 . . . . . 1 . . . . . . . 1 . . . . . . . . . . . . . 1 . . 1 . . . .
+## V31 . . . 1 1 1 . . . 1 . . 1 . . . . 1 . . . 1 . 1 . . . 1 . 1 . 1 1 . 1
+## V32 . . . . 1 1 . . . . . . . 1 1 1 . 1 . . . 1 . . . 1 . 1 . . 1 . 1 . 1
+## V33 . . . . 1 . . . . . . . 1 . . . . 1 . . . . . . . . . . . . 1 1 . . .
+## V34 . . . . . . . . . 1 . 1 . . . 1 1 . 1 . . . . . . . . . 1 . . . . . .
+## V35 . . . . . . . . . . . . . . 1 . . 1 1 . . . . . 1 . . 1 . . 1 1 . . .
+## V36 . . . . . . . . . . . . . . 1 1 . . . . . . . 1 . . . . . . . . . . .
+##      
+## V1  .
+## V2  .
+## V3  .
+## V4  .
+## V5  .
+## V6  .
+## V7  .
+## V8  .
+## V9  .
+## V10 .
+## V11 .
+## V12 .
+## V13 .
+## V14 .
+## V15 1
+## V16 1
+## V17 .
+## V18 .
+## V19 .
+## V20 .
+## V21 .
+## V22 .
+## V23 .
+## V24 1
+## V25 .
+## V26 .
+## V27 .
+## V28 .
+## V29 .
+## V30 .
+## V31 .
+## V32 .
+## V33 .
+## V34 .
+## V35 .
+## V36 .
+</code></pre>
+
+<pre><code class="r">v.attrs &lt;- get.data.frame(lazega, what=&quot;vertices&quot;) # what=&quot;vertices&quot; : attain vertices info
+v.attrs
+</code></pre>
+
+<pre><code>##     name Seniority Status Gender Office Years Age Practice School
+## V1    V1         1      1      1      1    31  64        1      1
+## V2    V2         2      1      1      1    32  62        2      1
+## V3    V3         3      1      1      2    13  67        1      1
+## V4    V4         4      1      1      1    31  59        2      3
+## V5    V5         5      1      1      2    31  59        1      2
+## V6    V6         6      1      1      2    29  55        1      1
+## V7    V7         7      1      1      2    29  63        2      3
+## V8    V8         8      1      1      1    28  53        1      3
+## V9    V9         9      1      1      1    25  53        2      1
+## V10  V10        10      1      1      1    25  53        2      3
+## V11  V11        11      1      1      1    23  50        1      1
+## V12  V12        12      1      1      1    24  52        2      2
+## V13  V13        13      1      1      1    22  57        1      2
+## V14  V14        14      1      1      2     1  56        2      1
+## V15  V15        15      1      1      3    21  48        2      3
+## V16  V16        16      1      1      1    20  46        2      1
+## V17  V17        17      1      1      1    23  50        2      1
+## V18  V18        18      1      1      2    18  45        1      2
+## V19  V19        19      1      1      1    19  46        2      1
+## V20  V20        20      1      1      1    19  49        1      1
+## V21  V21        21      1      1      1    17  43        1      2
+## V22  V22        22      1      1      1     9  49        1      3
+## V23  V23        23      1      1      1    16  45        1      2
+## V24  V24        24      1      1      1    15  44        1      2
+## V25  V25        25      1      1      2    15  43        2      2
+## V26  V26        26      1      1      1    15  41        1      3
+## V27  V27        27      1      2      1    13  47        1      1
+## V28  V28        28      1      1      2    11  38        2      2
+## V29  V29        29      1      2      1    10  38        2      3
+## V30  V30        30      1      1      2     7  39        1      3
+## V31  V31        31      1      1      2     8  34        1      2
+## V32  V32        32      1      1      2     8  33        1      3
+## V33  V33        33      1      1      2     8  37        1      3
+## V34  V34        34      1      2      1     8  36        2      2
+## V35  V35        35      1      1      2     8  33        2      3
+## V36  V36        36      1      1      1     5  43        1      3
+</code></pre>
+
+<pre><code class="r">#.6.2
+library(ergm)
+</code></pre>
+
+<pre><code>## Loading required package: statnet.common
+## Loading required package: network
+## network: Classes for Relational Data
+## Version 1.11.3 created on 2014-12-05.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##                     Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Martina Morris, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+##  For citation information, type citation(&quot;network&quot;).
+##  Type help(&quot;network-package&quot;) to get started.
+## 
+## 
+## Attaching package: &#39;network&#39;
+## 
+## The following objects are masked from &#39;package:igraph&#39;:
+## 
+##     %c%, %s%, add.edges, add.vertices, delete.edges,
+##     delete.vertices, get.edge.attribute, get.edges,
+##     get.vertex.attribute, is.bipartite, is.directed,
+##     list.edge.attributes, list.vertex.attributes,
+##     set.edge.attribute, set.vertex.attribute
+## 
+## 
+## ergm: version 3.2.4, created on 2014-12-13
+## Copyright (c) 2014, Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Carter T. Butts, University of California -- Irvine
+##                     Steven M. Goodreau, University of Washington
+##                     Pavel N. Krivitsky, University of Wollongong
+##                     Martina Morris, University of Washington
+##                     with contributions from
+##                     Li Wang
+##                     Kirk Li, University of Washington
+## Based on &quot;statnet&quot; project software (statnet.org).
+## For license and citation information see statnet.org/attribution
+## or type citation(&quot;ergm&quot;).
+## 
+## NOTE: If you use custom ERGM terms based on &#39;ergm.userterms&#39;
+## version prior to 3.1, you will need to perform a one-time update
+## of the package boilerplate files (the files that you did not write
+## or modify) from &#39;ergm.userterms&#39; 3.1 or later. See
+## help(&#39;eut-upgrade&#39;) for instructions.
+</code></pre>
+
+<pre><code class="r">lazega.s &lt;- network::as.network(as.matrix(A), directed = FALSE)
+network::set.vertex.attribute(lazega.s, &quot;Office&quot;, v.attrs$Office)
+network::set.vertex.attribute(lazega.s, &quot;Practice&quot;, v.attrs$Practice)
+network::set.vertex.attribute(lazega.s, &quot;Gender&quot;, v.attrs$Gender)
+network::set.vertex.attribute(lazega.s, &quot;Seniority&quot;, v.attrs$Seniority)
+</code></pre>
+
+<h2>6.2.2 Specifying a Model</h2>
+
+<pre><code class="r"># 6.3
+my.ergm.bern &lt;-formula(lazega.s ~ edges)
+my.ergm.bern
+</code></pre>
+
+<pre><code>## lazega.s ~ edges
+</code></pre>
+
+<pre><code class="r"># 6.4
+summary.statistics(my.ergm.bern)
+</code></pre>
+
+<pre><code>## edges 
+##   115
+</code></pre>
+
+<pre><code class="r">#6.5
+my.ergm &lt;- formula(lazega.s ~ edges + kstar(2) + kstar(3) + triangle)
+summary.statistics(my.ergm)
+</code></pre>
+
+<pre><code>##    edges   kstar2   kstar3 triangle 
+##      115      926     2681      120
+</code></pre>
+
+<pre><code class="r">#6.6
+my.ergm &lt;- formula(lazega.s ~ edges + gwesp(1, fixed = TRUE))
+summary.statistics(my.ergm)
+</code></pre>
+
+<pre><code>##         edges gwesp.fixed.1 
+##         115.0         213.2
+</code></pre>
+
+<pre><code class="r">#6.7
+lazega.ergm &lt;- formula(lazega.s ~ edges + gwesp(log(3), fixed = TRUE)
+ + nodemain(&quot;Seniority&quot;)
+ + nodemain (&quot;Practice&quot;)
+ + match (&quot;Practice&quot;)
+ + match (&quot;Gender&quot;)
+ + match (&quot;Office&quot;))
+</code></pre>
+
+<h2>6.2.3 Model Fitting</h2>
+
+<pre><code class="r"># In ergm, models are fit using the function ergm
+
+# 6.8
+set.seed(42)
+lazega.ergm.fit &lt;- ergm(lazega.ergm)
+</code></pre>
+
+<pre><code>## Iteration 1 of at most 20: 
+## The log-likelihood improved by 0.4763 
+## Step length converged once. Increasing MCMC sample size.
+## Iteration 2 of at most 20: 
+## The log-likelihood improved by 0.05578 
+## Step length converged twice. Stopping.
+## 
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.
+</code></pre>
+
+<pre><code class="r"># The analogy between ERGMs and GLMs may be drawn upon in summarizing and assessing the fit of the former.
+# For example, examination of an analysis of variance (ANOVA) table indicates that there is strong evidence that the variables used in the model lazega.ergm explain the variation in network connectivity to a highly nontrivial extent, with a change in deviance of 459 with only seven variables.
+
+#6.9
+anova.ergm(lazega.ergm.fit)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: lazega.s ~ edges + gwesp(log(3), fixed = TRUE) + nodemain(&quot;Seniority&quot;) + 
+##     nodemain(&quot;Practice&quot;) + match(&quot;Practice&quot;) + match(&quot;Gender&quot;) + 
+##     match(&quot;Office&quot;)
+##          Df Deviance Resid. Df Resid. Dev Pr(&gt;|Chisq|)    
+## NULL                       630          0                 
+## Model 1:  7     -460       623        460       &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<pre><code class="r">#Similarly, we can examine the relative contribution of the individual variables in our model.
+#6.10
+summary.ergm(lazega.ergm.fit)
+</code></pre>
+
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   lazega.s ~ edges + gwesp(log(3), fixed = TRUE) + nodemain(&quot;Seniority&quot;) + 
+##     nodemain(&quot;Practice&quot;) + match(&quot;Practice&quot;) + match(&quot;Gender&quot;) + 
+##     match(&quot;Office&quot;)
+## 
+## Iterations:  2 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                              Estimate Std. Error MCMC % p-value    
+## edges                        -7.01439    0.69703      0 &lt; 1e-04 ***
+## gwesp.fixed.1.09861228866811  0.59023    0.08596      0 &lt; 1e-04 ***
+## nodecov.Seniority             0.02476    0.00632      0 0.00010 ***
+## nodecov.Practice              0.39655    0.11108      0 0.00038 ***
+## nodematch.Practice            0.76474    0.19751      0 0.00012 ***
+## nodematch.Gender              0.74070    0.25026      0 0.00320 ** 
+## nodematch.Office              1.16230    0.19307      0 &lt; 1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 873  on 630  degrees of freedom
+##  Residual Deviance: 460  on 623  degrees of freedom
+##  
+## AIC: 474    BIC: 505    (Smaller is better.)
+</code></pre>
+
+<h2>6.2.4 Goodness-of-fit</h2>
+
+<pre><code class="r"># To assess the goodness-of-fit of our model in (6.13), as fit by ergm, the function &quot;gof&quot;&quot; in ergm runs the necessary Monte Carlo simulation and calculates comparisons with the original network graph in terms of the distribution of degree, geodesic length, and edge-wise shared partners (i.e., the number of neighbors shared by a pair of vertices defining an edge).
+
+#6.11
+gof.lazega.ergm &lt;- gof(lazega.ergm.fit)
+
+#6.12
+par(mfrow=c(1,3))
+plot(gof.lazega.ergm)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<h1>6.3 Network Block Models</h1>
+
+<h2>6.3.1 Model Specification</h2>
+
+<ul>
+<li>stochastic block model(SBM)</li>
+</ul>
+
+<h2>6.3.2 Model Fitting</h2>
+
+<pre><code class="r"># The R package mixer implements a number of methods that approximate or alter the original maximum likelihood problem have been proposed in the literature.
+
+# To illustrate, we use the network &quot;fblog of French political blogs&quot;&quot; introduced in Chap. 3.5. Recall that each blog is annotated as being associated with one of nine French political parties. Of course, these annotations do not necessarily correspond to an actual ‘true’ set of class groupings for these blogs, in the sense intended by the relatively simple form of the stochastic block model
+
+#6.13
+library(mixer)
+setSeed(42)
+fblog.sbm &lt;- mixer(as.matrix(get.adjacency(fblog)), qmin=2, qmax=15)
+</code></pre>
+
+<pre><code>## Mixer: the adjacency matrix has been transformed in a undirected edge list
+</code></pre>
+
+<pre><code class="r"># Note that we have specified only that the total number of classes Q be between 2 and 15. The so-called integration classification likelihood (ICL) criterion is used by mixer to select the number of classes fit to the network.
+
+# Examining the model output
+#6.14
+fblog.sbm.output &lt;- getModel(fblog.sbm)
+names(fblog.sbm.output)
+</code></pre>
+
+<pre><code>## [1] &quot;q&quot;         &quot;criterion&quot; &quot;alphas&quot;    &quot;Pis&quot;       &quot;Taus&quot;
+</code></pre>
+
+<pre><code class="r"># we see that the network of French blogs has been fit with
+# 6.15
+fblog.sbm.output$q
+</code></pre>
+
+<pre><code>## [1] 12
+</code></pre>
+
+<pre><code class="r"># classes, in estimated proportions
+#6.16
+fblog.sbm.output$alphas
+</code></pre>
+
+<pre><code>##  [1] 0.15109 0.12730 0.10811 0.05729 0.13584 0.03124 0.12385 0.09334
+##  [9] 0.01042 0.02090 0.12501 0.01563
+</code></pre>
+
+<pre><code class="r"># The output from a fitted stochastic block model also allows for the assignment of vertices to classes. Thus stochastic block models may be used as a modelbased method of graph partitioning, complementing the other methods introduced in Chap. 4.4.
+
+
+# For example, examining the estimates for the first three vertices in the French blog network
+# 6.17
+fblog.sbm.output$Taus[, 1:3]
+</code></pre>
+
+<pre><code>##            [,1]      [,2]      [,3]
+##  [1,] 1.000e+00 4.911e-03 1.000e+00
+##  [2,] 1.398e-05 1.000e-10 7.575e-07
+##  [3,] 9.613e-06 9.942e-01 1.769e-05
+##  [4,] 1.000e-10 1.000e-10 1.000e-10
+##  [5,] 1.338e-06 1.000e-10 8.199e-09
+##  [6,] 1.000e-10 1.000e-10 1.000e-10
+##  [7,] 3.546e-07 8.679e-04 6.114e-08
+##  [8,] 1.000e-10 1.000e-10 1.000e-10
+##  [9,] 1.000e-10 1.000e-10 1.000e-10
+## [10,] 1.000e-10 1.000e-10 1.000e-10
+## [11,] 4.434e-09 1.000e-10 1.000e-10
+## [12,] 1.000e-10 1.000e-10 1.000e-10
+</code></pre>
+
+<pre><code class="r"># we see that an assignment rule based on the maximum a posteriori criterion would place the first and third vertices in class 1, and the second, in class 3. 
+
+#Interestingly, the posterior probability vectors for these three vertices concentrate their weight quite strongly on the most probable class.
+#6.18
+my.ent &lt;- function(x)  { -sum(x*log(x,2))}
+apply(fblog.sbm.output$Taus[, 1:3], 2, my.ent)
+</code></pre>
+
+<pre><code>## [1] 0.0004559 0.0548084 0.0003232
+</code></pre>
+
+<pre><code class="r"># which are quite small compared to the value
+
+# 6.19
+log(fblog.sbm.output$q, 2)
+</code></pre>
+
+<pre><code>## [1] 3.585
+</code></pre>
+
+<pre><code class="r"># corresponding to the extreme case of a uniform distribution across the 12 classes.
+
+# The same observation seems to hold for the vast majority of the vertices
+
+# 6.20
+summary(apply(fblog.sbm.output$Taus, 2, my.ent))
+</code></pre>
+
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.0000  0.0000  0.0414  0.0030  1.4100
+</code></pre>
+
+<h2>6.3.3 Goodness-of-fit</h2>
+
+<pre><code class="r"># A selection of summaries produced by the mixer package are displayed in
+
+#6.21
+plot(fblog.sbm, classes = as.factor(V(fblog)$PolParty))
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAGwCAMAAABy/YdMAAAAKlBMVEX9/v0AAAAAAP8AVf8iAMYyyf9U/2XZ/wD3/1L9/v3/AAD/lAD/0Ar//wCzcEpyAAAADnRSTlP///////////8A/////6Km9MkAAAAJcEhZcwAACxIAAAsSAdLdfvwAAB4sSURBVHic7Z0Lm6SoDoYP7uzs0jv9///u6RLIBQKKglqVfM9MdxV4QV4hIaD9P29Sqf/dXQDTPTLwSmXglcrAK5WBVyoDr1QGXqkMvFIZeKUy8Epl4JXKwCuVgVcqA69UBl6pDLxSGXilMvBKZeCVysAr1T7wzuHH9obibs69PrnKriHPldmVfWLazy+eGxJqZ6ln9MiJBW1tX0/DA7WKvf9UjVMK6gXfPqwTwUfqjV3FrNaNIm0Rvs0Gf/5IIvjT6j3GbvDpX2qfJBWShFxPL5TkkV+xFeXZWSLeObzF51uk7fIzDQZfXAEpEPuSOrOiIFhQvmd+aHI5eNuF47IsUmWt/jWpAzw7JkCPJ/dezvVYhFeK51XCLxt+yVtlN5JcnqycRWFOytWuAMtYVFelIMWltS6b3zo+Jgu78c8N9bT4sqLZDSzmeiwCuz3jLuXBi4PVjudSD5ODr5AZBB79lRI8u8QyhxekrC7c04tnIJ/InlnV03ukpWPgi2tjtc4LwsDnN694eS2EeDzHetHLwGPNNvHmJy5qRQCPexY7tMCzE9IfTR1t8Z4VuZ5LCpHRg1/S5e0FX9bkfPBySTdOLNRKTrashOwMMnjpTNNaPJZVBo+5vPC1ymlVWht8cZz6KUaDz1iR6iiuTagVcqSaWyJWO7+BZPBYV3X1gqc3FL8wJ+b6lIl5dJPyuhw7GCZS8Ln3SjcXDsULc0oALb8Cz4qb3XFSraRvrNhi5WSXA+Uo6nQCeLkS/PbhFelcdezcc1x9nwnZ7rAkmnSmOvbtObK+LVavVAZeqQy8Uhl4pTLwSmXglcrAK5WBVyoDr1QGXqkMvFIZeKUy8Epl4JXKwCuVgVcqA69U/eDdE/TVs/HwSvvqSRcSvxp5KVXK+sq/flXPWSsi6AD47j3Gy21eF914+OkN/E1y/qujFAZeUhu81FPOBU9Px05NvnT23xPAV04vQyi3fTx4R35miZPkyPHp5/gl2ewu8gML/PV2ql7K08Dvd9N2ox9e4OBaChl7WvzreYftFu+YF5NOtr/FbztBDwDPnrfZ09X7eLk7SzKxq4dChZJ/+WLt+zoA8WTrOnjYbqOrx+3cLPCX2Pi1E+8ddWVVsHWCwYq1Sgq9Azzps7rAk+N98YejJoKXNBz8kaF2uq49z8RNAu8497x75ht79vDfPueOPvsXdv3yrFP8et1Ub+vVH4uw4HW9amLjDP2H33F29DKT/7EBnti0LvBx1wCeDW7mgZ9u4w+H1UhtsltHOt4s8J5wD1/Hgqf7hF9frL7cGzp37JHfQcdyoe2Xx5wYwMlGGzvB94zjWR29PXg39sFPPK5oNy4ALw+38sQj4CuHil/fzasf9JYC6cgC+SvAx664ufEA8PmY9u28+tPcW9eVH3yejXfp5RZReakyw3/CxscMfltPbfFFjHxEWz1/iPZ1uca3ESLgGfkGeOaid4NP4/8SfMWrP2/jS3fpDcBnMb/TZ5POzqYMtrv6MeCz7dwKngV1MGdDd4AfQGLzupz4cZAQfDrFjgAOKVALfAgAwrGyJs6PHCJ3bwN+BIjN6yJWaiD4u+fa+lW9lB4bH9NOVt4kf144UYzpTfTq83QSz0GPj/XWq1WAVlrt6uXeoxzO0e1oUP+BXv1l3GHQODFyl6c7QUfAC45iOi/7Wg3ZjvXqY9rWIdu6DvyErj7qCHhSJpf8vQqeAF44QSOAk43wn2fjB1HYtvHDT5md/TB44B0/ZAcC5+6zwI+CcD94OT2Dzo01zCowr14EL4/PLwvZDo/VD2PwUPCVFg83QTCdm8M5J2fVbXzeO5y38b6stxP1OA7BW4IvAzEVG38/eElH63F7xUSH3gR86OoT9nL/07Nz8fBlQc6DLw56sB5LZ+Eq3Wjjg0Hn4GEU1xrHfxT4WVOx22ceraJWySRKNOQXgpc2fFBXL9yXF+mC4VwO3hP4FDzY+K3I3Vnw27bwIvCjqd9q46O/VmYI4IOrlubmdoPPh/hs9i85io3Flg9p8eMb+03g755y6Vf1Ui4AP6OPv9mrr7V4aNWpxfu0egL/x95/Z6x+YwXOQ4dzwkzxID10OIfnZON43wneUfBkfpk+s+dIV1/U8c3gp2F/IHjHgy5g6l94Ij4P/j6O44X6iSGf+KxlAp/uIWhLHPzghRiiesDf5slTTQLPry2Cz9z3dWOXhjRkhAd55Wh5zV7Bk5nccCN9pbFiSCXO3Vzw4LPu36Hj6NM0azjnCMqUnjplcs6vNLQnAOmB8tI6sPEZeBoZ9I/26h+BfbsY/TFFsKsExAoGDlmAZ23+C+8U8fCsV/DoIHyBufBawY+08c73ziJI3SsDT7t8mHxHS/9V3Clx2xjdl8DjeSHxqZG7mQ3+dvBOcmC+EB4BTzx8dNJq4MGHg7iPJxEbvjnE6mEICQW5E/zUjn6oV9/d13/lzR3SHflDyync5go1unow5Tl4tl/a+4ng5xr4u4dzWQw2Gd0meMFJK7z6NCpkzh3a+Aw82Pj8DAb+pe0Wv7urvzsA26/qpcwC/xCP/qVZzp2QXg52U5gufgnuHbb4+uH3zM498OVHD+L+IPApbT74rmlZIXoope+poydx39PVHxjHy+nM2Y+DsyxlIPj6KtuPBX+3c1dLVw5+foO3+fidql5KE/xBG39BRz82gHMkZLs7vQzzsUkaJjIJd67F73TuYIC5R3viIdN1e+SulZ6HWer7TwN/ds1df4vfPyY+pQ8CjxHZGJ8rJ2kqh3rSI1T93eZ8TQnZ7k/fBE8aPERmrwLvvGziyc8ssaKHrL1gutKr35dYBQ+B3KtsvMefVAe8+udxf4ZzJyel9Xipk38K+CM2fuuEY/RoG7+ZWHXuHgNekoHHFThCejsxTthBnoDdX+nc1UZzjhn/HaO+qzr62+fjB4KHXj7298/w6stK+Tzww86+CT6FbCGP+PLY5B8BvuwGW/V4mWc3tKvf6sb2np08BFHZ2OVvxCAu3S02vtKHx8CCkFjR81x6f6Fz1wLvIErjxjt3Bbohr0LpaPGP5H6LV0/Xv8WE1KX7dwDvhWr7OPB+f/Th7rm2flUvpW3jJRNQr6MLud/s3Mk3SnwHgssSiduWmjQ5EM+hLZ4vnRV6gXmvNBUjuR8GvubfNM/eBs9y94GXunr093E/dvzsadmRy6ulEW61jq7s6G9q8Xd33P2qXsqGjRfcns8D3z2TLE6/pvQ8tdy4+YLDkEpej8e7AnqwqX9psuzUPg58ZWrywNkrEMJZ8NcO8LIVYOAf89DkM116PxE8XUSx/qiBJ2Y/G87Jh2dP2xAH4QvjuwL4kTbed9j4twV/dHm1OwKe7O87wMOaLJ+8O/cU8I/lPi1WX94u9Vh9H/j1RxnK3QBPj3BhV38t+EeO49vgY//AY/X1w5Q23sN7lBw4d/eDv7jBPwV8xXbzjT3AOgXeGfjbweOxd4LnZr4DvPccfOrswyb3v9L0agv/CPDyOF7eGGi99uoYx1Pwafo+/XxCizfwJF1ITBTjwvnmDhF86dulp3EfBP65Lr23kK2sEeBdces/SpNaPBvBO0wvNnakwfudXT117jx0+JnDd5mNd7T8JPmJi+mJ5oF3rgt8h41n98sB8Jd09XeAv9/GJyJ5em1j2mT2gvcQHgw7Pwz8HQ3+GeCl9EriafAh7WHgu49xWveD352exvH+EHg6KdMB/pJx/B0G/u3Ae98NPr0yj5I28B3b3g3eF8awD7x/KPhHe/Qv3Q3eQX9deP8t8D7aBxwFPszGKwUP1Y/nqc7H07Dra8Ov1AdsjuN9RroKnizw8deAfzx3i9yJOv0OnHvA32Tj78bYr+qlnH0Hzk0N/hnOHevn13RikdPCrKx/3hW5c+m15ay/l208yYfowgUvP9IF/u7226/qpZwEf5eFf0aL56fJ/oxc4cKnrfZ79RvnDQ9NOkHT3159m2f3QPAsHRfgxgE5yXHNpVfp/vkSil2CLzz9YBmme/XPd+n95S0+2lrc2GUL68eBdxQ8BAtGgN9o8W/B/RbwxcY0dd9iy+3zcvAju/otG2/gs3TpVKWN3/fsHG5fO+88G78B/kbuD7XxBn62Hgp+X+LArv4Wr/7Ojt7A+6ngJRn4x4CfOI5nK4zSuCHl3SgD7+fa+HVMmify34/XBPDk9o8Lq8LwGVPw7PBqCwy9V8HHUH5gR08QPmUjw5nDuRr40vQ/Vxarl3QMvHujBm/gRR3z6m9/huKtbfzYSRr5COe9+qLaYle/td9cGXg/Ezx341Pi1iGvkIH3U8H7Wou/WwbeT+3qJSdOGj5cLvldoBVt1UG3Ph+8r770sVqb9Wru32XksUxc/W+2jOnVHeqHGpdh4E+rP1YfZODfXP3DuWaygX8XGXilsq5eqY6CN725DLxSGXilMvBKZeCVysArlYFXKgOvVMfAN+Y6q7M6vRmumlfNcc0SmKgOgRcXaKSsBsaeDOdqedWcuNTZond7dLirr/KtZDQbtpRcxZuSylWgb7cA+EaNjdXXu4JGTv2OqN4UlRLUdzHlOgi+bq8rHLu7+i3wFeM/abHV5+mgc9edNxp89VgbpTNFHXPuWq3qEq9eLoGB3y8bxyuVgVcqA69UBl6pDLxSGXilMvBKZeCVysArlYFXKgOvVAZeqQy8Uhl4pTLwSmXglcrAK9V08JUl0q3NNzb5GN16hfPBi+uda9fstjf5HKkA7/gaWJfe855+xA3p57SZS39G3dWX4b2dbr/CC7p65xl76Z8XPjvYHRdUf8xTMvdf4RU23lWRO1cDz9oDdAepUby97r/Ce8GnLbzc4h2tIWgKn0D+/iu8zKt3ubH3JDF89uxzagFgAMmn99ftV2jjeKUy8Epl4JXKwCuVgVcqA69UBl6pDLxSGXilMvBKZeCVysArlYFXKgOvVAZeqQy8Uhl4pTLwSmXglcrAK5WBVyoDr1QGXqkMvFIZeKUy8Epl4JXKwCuVgVcqA69UBl6pDLxSGXilMvBKZeCVysAr1QzwvX/Je33jD34TU2POM159JJSW5DUyhQP0nQ6/heqBdyj1HG/VHPB9RWHb0i/iFT9AWJKyTNXiywfoO5108oPVMgs8eWEf3JwsKZWX3LkubRV/YIZPL0NlrwG87U4gpaMFCs2PZ7Kr9qTwWU3AFtlF0ktl3/AcbA9yqrZmgmflo7cD6RMwM8+q5cCv+8gXRcPb0AmZPl053baoI9gC9s0utaiURu1s6xrw5aUINcESKgc4cIVzLjArRQ4+L6IjV+fhAulVE9emWlukddfB76yTueCzkpIe23HOjvZrbwceLrMGHrMRPLtquDNa4HPQ2ffcqrQ1u8ULl+IpMd5c+O39NuDJNdWsVgGepvFfNfDFr6LFp9Ld2dXnd+lJG++KDZ4FHq5PLCIHL10uvw2K2sqadg18T7VMHcdnXj1LSqWjpSdbs73y66J31h3ixEmBOHh+1amt073krp7dBawDKNpIUS2kZtu6IHJHunjTpq6qqStCtntvQpP/LPCmB8rAK5WBVyoDr1QGXqkMvFIZeKUy8Epl4JXKwCuVgVcqA69UBl6pDLxSGXilMvBKZeCVysDfpWXxcRmdc+vnazULPKwzNFX0A/sH+X8v3bE0bRJ455ef29jIt7RE7AH91WefBX4x8Fsi3G8g3wbf8SxWvudr1+st1xuJcb+efBO88/EhgW4Fb+UGn+V9xLn/kL/29FPAJzd1UezfLUHVfPeB4F+eXfig18wvqc+roc+5X01+w8YfeggGeOsFj7xr6J8N/qDgZlHr39HLlskL4JumYbRmtHh2v/fv/QHil90DXvIMptwPGzYef/bIwDe/rirA/7SwZZHYt53Eo5oBnhTTwK9fhVoQvfplKdm/PtwM3rl9XT+/XY+W7J2VX3RRCa9AfdXEc/Svn1eDF238Jnjm0ekcyRfghb4/j9x52sgxDrACuBy8pC2SMIpfv+gc0GWgHO8r19xlyWP1C+4IQYB1I3e5jY/Fbn4tN18MPGvyP8T/DXLBjqcN2OzcIsuFzPElHN/iee+udCRPmihgD+TJJMbiwoT82hlgqyZGPYCfEtqZAD4bxKoEj5dNucc276EjX5ZoAhbqwq1+fNjAhxtjQgHHO3cZaaXg4boZ90B+SWwXn7r9BQ2AT/eED46Am9Np9o/jO8ErJ59x/yGfvPcX7kia9O3pHog9gBzKGyEDP02hqy7Ag28vgofuPgZuppEfA96hlnwSXi340FPn4P+NtbOkf+FzbN6QsiTu6cfoso2x8e476Yf8d7aFZvIl9wg+dPbgyLO27j0in9bbj/HqAbz7XlwOXmfwLgjB0z4xeO0UPEVL7PyCfuBo8qPBLwV4rTGcVWwM/3tVGNBl4XgOHvy7BXy84f3mYPA/Xf23gUcxGx/Qw0g+NnuMySfDSm8HH5CPb/KjwS/LCz6V1uBdEDfyP+gDWu8j+Mjzp55+uT/u77+TKfDQyrHVD63GHvD1aVlHuX/jbfC9Nn/F3l0xnHNsHA9RHvfrVwD/Qh9vCWz5aeuRBRvc4g18riJyh6abhHV/veRW8H/DVA4d29PbZIiuAK+afBGrX9J0O0RoI/cE/m/nwJ1/KUbuB1fjWPArdwPPxGfnkotO/fjIHcD/7ZJntyrF9cc2+aHgX9EbA59p4fPxtKdPjh0H79w/jpoCbP5PBb9Gbwx8pgUj2iQgk+ZdF2zwAfwP9n8i+OTXwazNyIocCn6pgNdMHqbavCejMuLXLwD+12s4989LOJpfmHP/UPBr9EYErzdqi+0UojX8XiAt/qfJB+6pqw9HIE7eQPIRfAeYBvjg25XgFQfvCvDRPYdVGBn4FCshMd2lbPID8KcWv/9RqTr4yN3Ao8hcDBr1zFVD386F9XdrWBfGezgtSwzF+ek60tXvRH8AvN6o7YKz7sS4p9YbPqfozV9/ubTk1sHmcc8Utve0OzhVMtbid5E/Al6td0fBhwQYnEPGazj3wv4XkP8PF90SUxGmcuAdWWPAD7DxcRBv4IlSb81ctfQbWrSL2EmTX0p5D+/JcvRIB0XA74RfAZ8G8TJ4peRTg8fxHHp6iBS4/5Vee0ewLrTFpxsjfD9VtBX83qchV9XALwY+Fxm6EfALtdGhA8/A0wkcT5dcIvhRNn6fdW9Oyzqy/srAr6LcCXjirkc/nfX1rD3z7j6BH+XVu55XX9TAJ9dOM3hsymk4DqM52nKhq4dATiLv0mMzmX1n5Ie8+3ZY5A65i+A1kKdNMyywS4sqPB+X+zQ6Sx5efGKGBfSxTS84eO+xyW2NAo8+fQW8gqgtOmRpYeVv8sSUJz08+vphewzx4O3jETfEftj9cE5o409F7ohPL4NXELxDJMAdY3Dew5z6QkN5kOHRGMAu8MsT/CPitZ6Ad6eGc8SnVww+fULuv8Eeo/lHXz/9S3cCNHSkzHf1V4GX3jpf6+q/m+AVRG1F8L+dp8TjdtDlQxuGRk3Ge56FbOO+g8HLfb2T0mXwxLeTwX++d1cBT53zuB0A9oQ/uzEIafJlBnhR+8FT7nrBg42vgKe3AGvDC8T3PPXn2Nf4xfsx5MkkjdjivYHfLeDDbDx69cRQk76cfCKZ4YApAWAPB19xvKQQvugKLN8GHolSr556aLgJLptlvXrm1XnyBbe5ArwkqWNY3DZ4ReQ9H8fDoG1hm9GID6SmD9mW2Pr9YPByQGjf8/FsLKca/KoQsQ3YYT31gsN2Dw9LF30/6xzSpwVxs27/nIa8EcMx1DXwCmJ3KAdvLaIduV97g/RohdCl8xafuPOo34PAM9euBl5BCIcLYMWvyQGAh2o8G9Mlxhx8OsCSIn2jwTspgJOBr03LZj29gY/Clhq+MfDrK1GIu0ehox8Yk3xatTkcfDVyt8fGt8HTFyOp6u05+OS/4/NUCxeuzHNptSWN9C2XgpfUCx4/LsV7kT5bZHSOTRnBk/E8xQ+rrNFGkJ5+QldfZbJl41+38S7w38o6+xx8+IotPqUT805ebAyTG2jjFzDz53V+Pv5VQAMvKVro+BnAO3xiOvf82Evs45oMDNqEDZ6yEGN9Pb2Bl5SDj4O212PTaSBPNg39PP8rNXRwv5pU5/78+TOEPQZwpNwdzt3qrO8E/63LuUN3DUbqgSN9OA62DAuwJPDJJgTsq85XZABfWVa/axy/PoKzD7y2Ed2S/cBBG8bkIHt9QIph/+Vgr9cHxD6CfFxliz+pGuDp4kDXjNypB0/C6/A8RaKZfkX29E9WvJ6nS/sHM/Dnz0Dyh8ETw52hbnb1SuL1Ucw3Sw3bk/ithyE8A09W3MZbZMm4/5A/V7T2kzR1G38M/LeWiZooQtkz99zDXcCCONmfJHPBHkSfMAd/bnX9Ua++8YKzFvgRjwK8kcCgr7+TOV+wE4A2H74K4GFxRw7+z7nnaQz8VBEDThfRkN6frcXI/xYd7Qxy7n/YzG63rgava3KWgs/icHGePk3Xx1/ZcM6n7uGnwkvw6YCHyB99l+1R8MocezDkJJDj0VMPSdhwFx65S7lrTg08hv+6dLbFC++yNPBE8FAc8+vRVyetPc7hcO7pnmmBP0T+cvDr5KyrjiM+TGzxHY3jeGzydHbOx9m5/6ByILf06vE0B8ifBC+9xLQJnj9W233yN5OjC609wU2dshi2wyieI5Oy0CMURp5W3uXgxZeYboCnb1DoPvl7iXInz09iuG5VsvcJPNmE7uBakbt+8ifBSy8x3QBP35nSffK3Euf+O9p5GLWz4R0ZmcFWKXwT8XPyvO6uBi++xNTAR3Hu4amaNAm/IHgPjT61b08dAQ99ASGfu0eXg5deYrrd1cN70bpP/k5yJXhkzcAvqW+nMb2C+zqeTtwz0G8B/mev1FF0n/ydlHf07l+ymKoET419iu5w8AuGUrKozfVe/THw4Bp0n/yd5Dh1XGbnYb2sR58+fma4YYgftqR0l+xbd+kM/CT9XCLBnk2zBqJhO+SOAR0M6RKfr+jdl+JTh86BF99euw3+e43ifDL4NeLyO5cj/jvpv8mYHufncQGGzJ3cJTeEbI+C/5b+FunnKA2/BPA4KUcRc+7J0StcfelEx7Ab+BlKLIThnCfk+SAuJKJpx9m7Ovczugv89+c+UAWQCvAYvPHQ2rHVsiAtvg9rDvdz07IwIj8A/mOXXhJI+YDOI3BPmzW31Az8wqK7A3WmxeNbDQ+D/0DyFLzLuXsMyaOnH1Mz9GTiZgL3c+CXU+C/49Lsz5qjZb0yfRlONn3u3NcqB39emqAn4P0c7udsPMyzHQO/3jl484y+tHuUUXIr+/y+XoD7ip419fTBg2M3pZyn19ydAk+fx/hM8LFPy7dyBPwXywZPD039FN0LPsAP7D8VvLTR64+JUvLZLkt6kfnRQfoOtcHveaDiJHjo8D9kAS4nVQG3/vVg2tnTMFzo4l0wAtPKefTlRwPBf4d1eEvm6r3pbZBNm8kbuZz8kssJXcFQPQH8d3Tw4794DyTrCP/eQxR8tad2618TRfKORV41gV9HCMHcE/D040LugUffCCzwLm/iCpWb3Ar+GhtPvwT8rx+eGAD5diD3wKPuBHTLa1s495dz4R1HOHuTb3KnjRc1FTx+W08CXCu2QO4S7haPwEpy+Dx0BTy+93RSIR/W4jl4POd37AxSl+BaZmFk/cwReVwmi+qhZs3ORD3GxguxHSJpNzQL37xLeH4UGFv8v05u8HrB9+8G9wCmzKmzAcIm/0O+coPC6rsp6gHPpmXfQrNq7bTwpSevN95Vtjm+vGaH+m286byW+GgkfTpS2uo28KY5CvOyt3ZLO8Bbkx8tHt27pwxHW/w9NrtXQ6tqnJbK5yt1GPyxvGNZE3ZTr6POnYF/c/WP4309cTvPwD9FBl6pDLxSmY1XKgvgKJWBVyoDr1QGXqkMvFIZeKUy8Epl4JXqGPjGjKerZYfE3qw1vb5bLWvjkKZj4J2vRsVWFFJ2SOzNijlynquXpX1I03Dwa2VXsxsoqlmufr+46l3WzDO9NLrFt8DXsxoE/aGOwlr8li4E73xjzypBWEPVt1sjz/TSdeDrFnmLkrX4CbrMq3cNH3zDBT+ym3n1G7JxvFIZeKUy8Epl4JXKwCuVgVcqA69UBl6pDLxSGXilMvBKZeCVysArlYFXKgOvVAZeqQy8Ut0I3hbH3CkDr1S3gU+L4uBz+h9/2nK5uboLvNv4Z9Qn62bw6YEX9tVh4zfN0u0t3vO27tH2G/mZut3Gw0/+1Uz8ZD1hHO+sdV+vJ4A3e36DHgHedL0MvFIZeKUy8Epl4JXKwCuVgVcqA69UBl6pDLxSGXilMvBKZeCV6v8Xg5uoFKcnawAAAABJRU5ErkJggg==" alt="plot of chunk unnamed-chunk-6"/> </p>
+
+<pre><code class="r"># &quot;the integrated conditional likelihood (ICL) criteria&quot;&quot; seems to suggest there is some latitude in this choice, with anywhere from 8 to 12 classes being reasonable.
+
+# Examination of the adjacency matrix y, with rows and columns reorganized by the assigned vertex classes, indicates that there are seven larger classes, and five smaller classes.
+</code></pre>
+
+<h1>6.4 Latent Network Models</h1>
+
+<ul>
+<li>These models contain variables that are unobserved but
+which play a role in determining the probability that vertex pairs are incident to
+each other.</li>
+</ul>
+
+<h2>6.4.1 General Formulatioon</h2>
+
+<ul>
+<li>ppt file</li>
+</ul>
+
+<h2>6.4.2 Specifying the Latent Effects</h2>
+
+<ul>
+<li>ppt file</li>
+</ul>
+
+<h2>6.4.3 Modeling Fitting</h2>
+
+<pre><code class="r"># The package eigenmodel
+
+# The function eigenmodel mcmc in eigenmodel uses Monte Carlo Markov Chain (MCMC) techniques to simulate from the relevant posterior distributions
+
+
+#6.22
+summary(lazega)
+</code></pre>
+
+<pre><code>## IGRAPH UN-- 36 115 -- 
+## attr: name (v/c), Seniority (v/n), Status (v/n), Gender (v/n),
+##   Office (v/n), Years (v/n), Age (v/n), Practice (v/n), School
+##   (v/n)
+</code></pre>
+
+<pre><code class="r"># We might hypothesize that collaboration in this setting is driven by similarity of practice, a form of homophily.
+
+# On the other hand, we could similarly hypothesize that collaboration is instead driven by shared office location for distance.
+
+# Because the eigenmodel formulation of latent network models is able to capture aspects of both distance and homophily
+
+# we obtain for three different eigenmodels, specifying (i) no pair-specific covariates, (ii) a covariate for common practice, and (iii) a covariate for shared office location, respectively.
+
+# To fit the model with no pair-specific covariates and a latent eigen-space of Q=2 dimensions is accomplished as follows.
+
+#6.23
+library(eigenmodel)
+set.seed(42)
+A &lt;- get.adjacency(lazega, sparse = FALSE)
+lazega.leig.fit1 &lt;- eigenmodel_mcmc(A, R=2, S=11000, burn = 1000)
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:11:26 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:11:31 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:11:35 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:11:40 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:11:44 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:11:49 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:11:53 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:11:58 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:12:02 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:12:06 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:12:11 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:12:15 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:12:20 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:12:24 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:12:29 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:12:33 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:12:38 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:12:42 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:12:47 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:12:51 2015
+</code></pre>
+
+<pre><code class="r"># In order to include the effects of common practice, we create an array with that information
+
+#6.24
+same.prac.op &lt;- v.attr.lazega$Office %o% v.attr.lazega$Office #%o% o is alphabet
+same.prac &lt;- matrix(as.numeric(same.prac.op %in% c(1,4,9)), 36, 36)
+same.prac &lt;- array(same.prac, dim=c(36,36,1))
+
+# and fit the model with this additional argument
+
+#6.25
+lazega.leig.fit2 &lt;- eigenmodel_mcmc(A, same.prac, R=2, S=11000, burn=10000)
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:12:56 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:13:00 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:13:05 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:13:09 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:13:15 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:13:21 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:13:27 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:13:32 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:13:37 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:13:41 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:13:45 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:13:50 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:13:54 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:13:58 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:14:03 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:14:07 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:14:12 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:14:16 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:14:21 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:14:26 2015
+</code></pre>
+
+<pre><code class="r"># Finally, we do similarly for the model that includes information on shared office locations.
+
+#6.26
+same.off.op &lt;- v.attr.lazega$Office %o% v.attr.lazega$Office
+same.off &lt;- matrix(as.numeric(same.off.op %in% c(1,4,9)), 36, 36)
+same.off &lt;- array(same.off, dim=c(36, 36, 1))
+lazega.leig.fit3 &lt;- eigenmodel_mcmc(A, same.off, R=2, S=11000, burn = 10000)
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:14:30 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:14:35 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:14:39 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:14:44 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:14:48 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:14:52 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:14:57 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:15:01 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:15:06 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:15:10 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:15:15 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:15:19 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:15:23 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:15:28 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:15:32 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:15:37 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:15:41 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:15:45 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:15:50 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:15:55 2015
+</code></pre>
+
+<pre><code class="r"># In order to compare the representation of the network lazega in each of the underlying two-dimensional latent spaces inferred for these models, we extract the eigenvectors for each fitted model
+
+#6.27
+lat.sp.1 &lt;- eigen(lazega.leig.fit1$ULU_postmean)$vec[, 1:2]
+lat.sp.2 &lt;- eigen(lazega.leig.fit2$ULU_postmean)$vec[, 1:2]
+lat.sp.3 &lt;- eigen(lazega.leig.fit3$ULU_postmean)$vec[, 1:2]
+
+# and plot the network in igraph using these coordinates as the layout.
+
+#6.28
+colbar &lt;- c(&quot;red&quot;, &quot;dodgerblue&quot;, &quot;goldenrod&quot;)
+v.colors &lt;- colbar[V(lazega)$Office]
+v.shapes &lt;- c(&quot;circle&quot;, &quot;square&quot;) [V(lazega)$Practice]
+v.size &lt;- 3.5*sqrt(V(lazega)$Years)
+v.label &lt;- V(lazega)$Seniority
+plot(lazega, layout=lat.sp.1, vertex.color=v.colors, vertex.shape = v.shapes, vertex.size = v.size,
+     vertex.label=v.label)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-7"/> </p>
+
+<pre><code class="r"># generates the visualization corresponding to the fit without any pair-specific covariates, and those for the other two models are obtained similarly (Fig. 6.3).
+
+# Examination of these three visualizations indicates that while the first two are somewhat similar, the third is distinct.
+
+#6.29
+apply(lazega.leig.fit1$L_postsamp, 2, mean)
+</code></pre>
+
+<pre><code>## [1] 0.2370 0.9468
+</code></pre>
+
+<pre><code class="r">apply(lazega.leig.fit2$L_postsamp, 2, mean)
+</code></pre>
+
+<pre><code>## [1] 0.5970 0.3113
+</code></pre>
+
+<pre><code class="r">apply(lazega.leig.fit3$L_postsamp, 2, mean)
+</code></pre>
+
+<pre><code>## [1] 0.5970 0.3113
+</code></pre>
+
+<h2>6.4.4 Goodness-of-fit</h2>
+
+<pre><code class="r">#6.30
+perm.index &lt;- sample(1:630)
+nfolds &lt;- 5
+nmiss &lt;- 630/nfolds
+Avec &lt;- A[lower.tri(A)]
+Avec.pred1 &lt;- numeric(length(Avec))
+
+# the process of cross-validation is implemented in the following lines.
+
+#6.31
+for(i in seq(1, nfolds))   {
+  #index of missing values.
+  miss.index &lt;- seq(((i-1) * nmiss +1), (i * nmiss), 1)
+  A.miss.index &lt;- perm.index[miss.index]
+
+  #Fill a new Atemp appropriately with NA&#39;s.
+  Avec.temp &lt;- Avec
+  Avec.temp [A.miss.index] &lt;- rep(&quot;NA&quot;, length(A.miss.index))
+  Avec.temp &lt;- as.numeric(Avec.temp)
+  Atemp &lt;- matrix(0, 36, 36)
+  Atemp[lower.tri(Atemp)] &lt;- Avec.temp
+  Atemp &lt;- Atemp + t(Atemp)
+
+  #Now fit model and predict.
+  Y &lt;- Atemp
+
+  model1.fit &lt;- eigenmodel_mcmc(Y, R=2, S=11000, burn =10000)
+  model1.pred &lt;- model1.fit$Y_postmean
+  model1.pred.vec &lt;- model1.pred[lower.tri(model1.pred)]
+  Avec.pred1[A.miss.index] &lt;- model1.pred.vec[A.miss.index]
+}
+</code></pre>
+
+<pre><code>## Warning: 강제형변환에 의해 생성된 NA 입니다
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:16:00 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:16:04 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:16:09 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:16:13 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:16:17 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:16:22 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:16:26 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:16:31 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:16:35 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:16:39 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:16:44 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:16:48 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:16:52 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:16:57 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:17:01 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:17:05 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:17:10 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:17:14 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:17:19 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:17:24 2015
+</code></pre>
+
+<pre><code>## Warning: 강제형변환에 의해 생성된 NA 입니다
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:17:28 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:17:32 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:17:37 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:17:41 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:17:45 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:17:50 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:17:54 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:17:58 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:18:03 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:18:07 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:18:11 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:18:16 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:18:20 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:18:25 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:18:29 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:18:33 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:18:38 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:18:42 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:18:47 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:18:52 2015
+</code></pre>
+
+<pre><code>## Warning: 강제형변환에 의해 생성된 NA 입니다
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:18:56 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:19:00 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:19:05 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:19:09 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:19:13 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:19:18 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:19:22 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:19:26 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:19:31 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:19:35 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:19:39 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:19:44 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:19:48 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:19:53 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:19:57 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:20:01 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:20:06 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:20:10 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:20:15 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:20:20 2015
+</code></pre>
+
+<pre><code>## Warning: 강제형변환에 의해 생성된 NA 입니다
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:20:24 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:20:29 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:20:33 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:20:37 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:20:42 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:20:46 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:20:50 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:20:55 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:20:59 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:21:03 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:21:08 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:21:12 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:21:16 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:21:21 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:21:25 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:21:30 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:21:34 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:21:38 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:21:43 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:21:48 2015
+</code></pre>
+
+<pre><code>## Warning: 강제형변환에 의해 생성된 NA 입니다
+</code></pre>
+
+<pre><code>## 5 percent done (iteration 550) Fri Mar 27 18:21:53 2015
+## 10 percent done (iteration 1100) Fri Mar 27 18:21:57 2015
+## 15 percent done (iteration 1650) Fri Mar 27 18:22:02 2015
+## 20 percent done (iteration 2200) Fri Mar 27 18:22:06 2015
+## 25 percent done (iteration 2750) Fri Mar 27 18:22:10 2015
+## 30 percent done (iteration 3300) Fri Mar 27 18:22:15 2015
+## 35 percent done (iteration 3850) Fri Mar 27 18:22:19 2015
+## 40 percent done (iteration 4400) Fri Mar 27 18:22:24 2015
+## 45 percent done (iteration 4950) Fri Mar 27 18:22:28 2015
+## 50 percent done (iteration 5500) Fri Mar 27 18:22:32 2015
+## 55 percent done (iteration 6050) Fri Mar 27 18:22:37 2015
+## 60 percent done (iteration 6600) Fri Mar 27 18:22:41 2015
+## 65 percent done (iteration 7150) Fri Mar 27 18:22:45 2015
+## 70 percent done (iteration 7700) Fri Mar 27 18:22:50 2015
+## 75 percent done (iteration 8250) Fri Mar 27 18:22:54 2015
+## 80 percent done (iteration 8800) Fri Mar 27 18:22:58 2015
+## 85 percent done (iteration 9350) Fri Mar 27 18:23:03 2015
+## 90 percent done (iteration 9900) Fri Mar 27 18:23:07 2015
+## 95 percent done (iteration 10450) Fri Mar 27 18:23:12 2015
+## 100 percent done (iteration 11000) Fri Mar 27 18:23:17 2015
+</code></pre>
+
+<pre><code class="r"># For example, using the package ROCR, an ROC curve for the predictions based on our first model are generated as follows.
+
+#6.32
+library(ROCR)
+</code></pre>
+
+<pre><code>## Loading required package: gplots
+## KernSmooth 2.23 loaded
+## Copyright M. P. Wand 1997-2009
+## 
+## Attaching package: &#39;gplots&#39;
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     lowess
+</code></pre>
+
+<pre><code class="r">pred1 &lt;- prediction(Avec.pred1, Avec)
+perf1 &lt;- performance(pred1, &quot;tpr&quot;, &quot;fpr&quot;)
+plot(perf1, col=&quot;blue&quot;, lwd=3)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-8"/> </p>
+
+<pre><code class="r"># The ROC curves for each of our three latent network models for the Lazega lawyer network are shown in Fig. 6.4. We see that from the perspective of predicting edge status, all three models appear to be comparable in their performance and to perform reasonably well, with an area under the curve (AUC) of roughly 80%.
+
+
+# 6.33
+perf1.auc &lt;- performance(pred1, &quot;auc&quot;)
+slot(perf1.auc, &quot;y.values&quot;)
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] 0.8246
+</code></pre>
+
+</body>
+
+</html>
+
